@@ -105,7 +105,7 @@ public class vCliente extends JFrame {
 			model.addRow(item);
 		}
 		tblDatos.setModel(model);
-	}
+	}       
 
 	public vCliente() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(vCliente.class.getResource("/Img/icono.jpg")));
