@@ -29,6 +29,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import Dao.DaoCliente;
 import Modelo.Cliente;
 import Modelo.Venta;
+import modelo.Proveedor;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -45,6 +46,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class vCliente extends JFrame {
 
@@ -65,6 +68,7 @@ public class vCliente extends JFrame {
 	int fila=-1;
 	Cliente Cliente;
 	private JButton btnpdf;
+	private JTextField txtbuscar;
 	
 
 	public static void main(String[] args) {
@@ -85,6 +89,22 @@ public class vCliente extends JFrame {
 		txtdomocilio.setText("");
 		txttelefono.setText("");
 		txtnombre.setText("");
+	}
+	
+	public void refrescarTabla2(String palabra) {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+		lista = DaoCliente.fetchClientes(palabra);
+		for (Proveedor p : listaProveedors) {
+			Object item[] = new Object[4];
+			item[0] = p.getNombreProveedor();
+			item[1] = p.getNombreContacto();
+			item[2] = p.getTelefonoProveedor();
+			item[3] = p.getCiudadProveedor();
+			model.addRow(item);
+		}
+		tblDatos.setModel(model);
 	}
 
 	public vCliente() {
@@ -258,12 +278,12 @@ public class vCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\sdeba\\eclipse-workspace\\Proyectofinal\\src\\PDF\\reporte.pdf");
+					File file = new File("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\Cliente.pdf");
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\sdeba\\eclipse-workspace\\Proyectofinal\\src\\Img\\icono.jpg");
+					Image img = Image.getInstance("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);
@@ -327,6 +347,23 @@ public class vCliente extends JFrame {
 		});
 		btnpdf.setBounds(178, 139, 89, 23);
 		contentPane.add(btnpdf);
+		
+			
+		
+		JLabel lblNewLabel_2 = new JLabel("buscar");
+		lblNewLabel_2.setBounds(10, 148, 46, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		txtbuscar = new JTextField();
+		txtbuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla2(txtbuscar.getText().toString());
+			}
+		});
+		txtbuscar.setColumns(10);
+		txtbuscar.setBounds(20, 173, 86, 20);
+		contentPane.add(txtbuscar);
 		refrescarTabla();
 	}
 	public void refrescarTabla() {

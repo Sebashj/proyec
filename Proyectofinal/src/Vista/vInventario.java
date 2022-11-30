@@ -98,7 +98,7 @@ public class vInventario extends JFrame {
 		listaProducto=daoPro.fetchProductos();
 		DefaultComboBoxModel model=new DefaultComboBoxModel();
 		for (Producto Inventario : listaProducto) {
-			model.addElement(Inventario.getIdproducto());
+			model.addElement(Inventario.getDescripcion());
 		}
 		cboproducto.setModel(model);
 	}
@@ -156,7 +156,7 @@ public class vInventario extends JFrame {
 		txtFecha.setBounds(163, 93, 86, 20);
 		contentPane.add(txtFecha);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("idProducto");
+		JLabel lblNewLabel_1_2 = new JLabel("Producto");
 		lblNewLabel_1_2.setBounds(10, 58, 133, 23);
 		contentPane.add(lblNewLabel_1_2);
 		
@@ -304,12 +304,12 @@ public class vInventario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\sdeba\\eclipse-workspace\\Proyectofinal\\src\\PDF\\reporte.pdf");
+					File file = new File("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\Inventario.pdf");
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\sdeba\\eclipse-workspace\\Proyectofinal\\src\\Img\\icono.jpg");
+					Image img = Image.getInstance("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);

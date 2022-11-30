@@ -30,9 +30,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import Dao.DaoDetalleV;
 import Dao.DaoProducto;
+import Dao.DaoProveedor;
 import Dao.DaoVenta;
 import Modelo.DetalleV;
 import Modelo.Producto;
+import Modelo.Proveedor;
 import Modelo.Venta;
 
 import javax.swing.border.LineBorder;
@@ -72,6 +74,7 @@ public class vDetalleV extends JFrame {
 	DetalleV DetalleV;
 	private JTextField txtcantidad;
 	ArrayList<Producto> listaProducto=new ArrayList<Producto>();
+	ArrayList<Proveedor> listaProveedor=new ArrayList<Proveedor>();
 	ArrayList<Venta> listaVenta=new ArrayList<Venta>();
 	private JComboBox cboventa;
 	private JComboBox cboproducto;
@@ -98,14 +101,26 @@ public class vDetalleV extends JFrame {
 		txtcantidad.setText("");
 	}
 	public void cargarComboProducto() {
-		DaoProducto daoPro=new DaoProducto();		
-		listaProducto=daoPro.fetchProductos();
+		DaoProveedor daoPro=new DaoProveedor();		
+		listaProveedor=daoPro.fetchProveedor();
 		DefaultComboBoxModel model=new DefaultComboBoxModel();
-		for (Producto DetalleV : listaProducto) {
-		 	model.addElement(DetalleV.getIdproducto());
+		for (Proveedor Producto : listaProveedor) {
+		 	model.addElement(Producto.getDescripcion());
 		}
-		cboventa.setModel(model);
+		cboproducto.setModel(model);
 	}
+	
+
+	
+	public String Proveedor(int id) {
+		for (Proveedor Proveedor : listaProveedor) {
+			if(Proveedor.getIdproveedor()==id) {
+				return Proveedor.getDescripcion();
+			}
+		}
+		return null;
+	}
+
 	
 	public int Producto(int id) {
 		for (Producto Producto : listaProducto) {
@@ -120,9 +135,9 @@ public class vDetalleV extends JFrame {
 		listaVenta=daoPro.fetchVentas();
 		DefaultComboBoxModel model=new DefaultComboBoxModel();
 		for (Venta DetalleV : listaVenta) {
-		 	model.addElement(DetalleV.getIdventa());
+		 	model.addElement(DetalleV.getNopedido());
 		}
-		cboproducto.setModel(model);
+		cboventa.setModel(model);
 	}
 	
 	public int Venta(int id) {
@@ -321,7 +336,7 @@ public class vDetalleV extends JFrame {
 		cboventa.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				cargarComboProducto();
+				cargarComboVenta();
 			}
 		});
 		cboventa.setBounds(163, 92, 86, 22);
@@ -331,7 +346,7 @@ public class vDetalleV extends JFrame {
 		cboproducto.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				cargarComboVenta();
+				cargarComboProducto();
 			}
 		});
 		cboproducto.setBounds(163, 58, 86, 22);
@@ -342,12 +357,12 @@ public class vDetalleV extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\sdeba\\eclipse-workspace\\Proyectofinal\\src\\PDF\\reporte.pdf");
+					File file = new File("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\detalleV.pdf");
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\sdeba\\eclipse-workspace\\Proyectofinal\\src\\Img\\icono.jpg");
+					Image img = Image.getInstance("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);
