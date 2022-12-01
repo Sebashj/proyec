@@ -3,6 +3,7 @@ package Vista;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -46,7 +47,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.awt.Toolkit;
 
-public class vProveedor extends JFrame {
+public class vProveedor extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JLabel lblid;
@@ -87,8 +88,8 @@ public class vProveedor extends JFrame {
 	}
 
 	public vProveedor() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(vProveedor.class.getResource("/Img/icono.jpg")));
-		setLocationRelativeTo(null);
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(vProveedor.class.getResource("/Img/icono.jpg")));
+		//setLocationRelativeTo(null);
 		setTitle("Proveedor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 772, 322);
@@ -258,12 +259,12 @@ public class vProveedor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\Proveedor.pdf");
+					File file = new File("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\Proveedor.pdf");
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
+					Image img = Image.getInstance("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);

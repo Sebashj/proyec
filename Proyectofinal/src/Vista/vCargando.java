@@ -43,7 +43,7 @@ public class vCargando extends JFrame {
 					}
 					if (i == 100) {
 						setVisible(false);
-						vEmpleado p=new vEmpleado();
+						vPrincial p=new vPrincial();
 						p.setVisible(true);
 					}
 				}

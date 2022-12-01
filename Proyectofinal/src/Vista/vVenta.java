@@ -3,6 +3,7 @@ package Vista;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -56,7 +57,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class vVenta extends JFrame {
+public class vVenta extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JLabel lblid;
@@ -110,7 +111,7 @@ public class vVenta extends JFrame {
 		listaEmpleado=daoPro.fetchEmpleados();
 		DefaultComboBoxModel model=new DefaultComboBoxModel();
 		for (Empleado Venta : listaEmpleado) {
-		 	model.addElement(Venta.getNombre());
+		 	model.addElement(Venta.getIdempleado());
 		}
 		cboempleado.setModel(model);
 	}
@@ -128,7 +129,7 @@ public class vVenta extends JFrame {
 		listaCliente=daoPro.fetchClientes();
 		DefaultComboBoxModel model=new DefaultComboBoxModel();
 		for (Cliente Venta : listaCliente) {
-		 	model.addElement(Venta.getNombre());
+		 	model.addElement(Venta.getIdcliente());
 		}
 		cbocliente.setModel(model);
 	}
@@ -144,8 +145,8 @@ public class vVenta extends JFrame {
 
 
 	public vVenta() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(vVenta.class.getResource("/Img/icono.jpg")));
-		setLocationRelativeTo(null);
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(vVenta.class.getResource("/Img/icono.jpg")));
+		//setLocationRelativeTo(null);
 		setTitle("Venta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 711, 502);
@@ -363,12 +364,12 @@ public class vVenta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\venta.pdf");
+					File file = new File("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\venta.pdf");
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
+					Image img = Image.getInstance("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);

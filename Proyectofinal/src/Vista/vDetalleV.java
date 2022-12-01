@@ -3,6 +3,7 @@ package Vista;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -56,7 +57,7 @@ import javax.swing.JComboBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class vDetalleV extends JFrame {
+public class vDetalleV extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JLabel lblid;
@@ -105,23 +106,11 @@ public class vDetalleV extends JFrame {
 		listaProveedor=daoPro.fetchProveedor();
 		DefaultComboBoxModel model=new DefaultComboBoxModel();
 		for (Proveedor Producto : listaProveedor) {
-		 	model.addElement(Producto.getDescripcion());
+		 	model.addElement(Producto.getIdproveedor());
 		}
 		cboproducto.setModel(model);
 	}
-	
 
-	
-	public String Proveedor(int id) {
-		for (Proveedor Proveedor : listaProveedor) {
-			if(Proveedor.getIdproveedor()==id) {
-				return Proveedor.getDescripcion();
-			}
-		}
-		return null;
-	}
-
-	
 	public int Producto(int id) {
 		for (Producto Producto : listaProducto) {
 			if(DetalleV.getIdproducto()==id) {
@@ -130,6 +119,7 @@ public class vDetalleV extends JFrame {
 		}
 		return (Integer) null;
 	}
+	
 	public void cargarComboVenta() {
 		DaoVenta daoPro=new DaoVenta();		
 		listaVenta=daoPro.fetchVentas();
@@ -151,8 +141,8 @@ public class vDetalleV extends JFrame {
 
 
 	public vDetalleV() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(vDetalleV.class.getResource("/Img/icono.jpg")));
-		setLocationRelativeTo(null);
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(vDetalleV.class.getResource("/Img/icono.jpg")));
+		//setLocationRelativeTo(null);
 		setTitle("DetalleV");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 444, 502);
@@ -357,12 +347,12 @@ public class vDetalleV extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\detalleV.pdf");
+					File file = new File("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\detalleV.pdf");
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\Alumno.SALA2-PC35\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
+					Image img = Image.getInstance("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);
