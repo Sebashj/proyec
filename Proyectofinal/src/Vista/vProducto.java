@@ -54,6 +54,8 @@ import java.awt.Toolkit;
 import javax.swing.JComboBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class vProducto extends JInternalFrame {
 
@@ -123,7 +125,7 @@ public class vProducto extends JInternalFrame {
 		//setLocationRelativeTo(null);
 		setTitle("Producto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 432, 502);
+		setBounds(100, 100, 449, 502);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
@@ -407,6 +409,7 @@ public class vProducto extends JInternalFrame {
 		cargarComboProducto();
 		refrescarTabla();
 	}
+	
 	public void refrescarTabla() {
 		while(modelo.getRowCount()>0) {
 		modelo.removeRow(0);

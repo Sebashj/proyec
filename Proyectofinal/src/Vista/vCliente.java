@@ -29,6 +29,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import Dao.DaoCliente;
 import Modelo.Cliente;
+import Modelo.Producto;
 import Modelo.Venta;
 
 import javax.swing.border.LineBorder;
@@ -68,6 +69,7 @@ public class vCliente extends JInternalFrame {
 	int fila=-1;
 	Cliente Cliente;
 	private JButton btnpdf;
+	private JTextField txtBuscar;
 	
 
 	public static void main(String[] args) {
@@ -331,8 +333,35 @@ public class vCliente extends JInternalFrame {
 		});
 		btnpdf.setBounds(178, 139, 89, 23);
 		contentPane.add(btnpdf);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla2(txtBuscar.getText().toString());
+			}
+		});
+		txtBuscar.setBounds(110, 191, 86, 20);
+		contentPane.add(txtBuscar);
+		txtBuscar.setColumns(10);
 		refrescarTabla();
 	}
+	public void refrescarTabla2(String palabra) {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+		lista=dao.fetchClientes();
+		for(Cliente u: lista) {
+				Object o[]=new Object [4];
+				o[0]=u.getIdcliente();
+				o[1]=u.getDomicilio();
+				o[2]=u.getTelefono();
+				o[3]=u.getNombre();
+				modelo.addRow(o);
+		}
+		tblCliente.setModel(modelo);
+	}
+	
 	public void refrescarTabla() {
 		while(modelo.getRowCount()>0) {
 		modelo.removeRow(0);

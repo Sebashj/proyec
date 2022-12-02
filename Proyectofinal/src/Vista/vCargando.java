@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import Vista.vEmpleado;
 
 import javax.swing.JProgressBar;
+import java.awt.Color;
 
 public class vCargando extends JFrame {
 
@@ -64,6 +65,7 @@ public class vCargando extends JFrame {
 		contentPane.setLayout(null);
 
 		barcargando = new JProgressBar();
+		barcargando.setForeground(new Color(0, 0, 0));
 		barcargando.setStringPainted(true);
 		barcargando.setBounds(0, 0, 450, 84);
 		contentPane.add(barcargando);
