@@ -50,6 +50,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.awt.Toolkit;
 import javax.swing.JComboBox;
 import java.awt.event.FocusAdapter;
@@ -106,8 +108,16 @@ public class vProducto extends JInternalFrame {
 		for (Proveedor Producto : listaProveedor) {
 			model.addElement(Producto.getIdproveedor());
 		}
-		cbodescripcion.setModel(model);	
 		cboprovedor.setModel(model);
+	}	
+	public void cargarComboDescripcion() {
+		DaoProveedor daoPro=new DaoProveedor();		
+		listaProveedor=daoPro.fetchProveedor();
+		DefaultComboBoxModel model=new DefaultComboBoxModel();
+		for (Proveedor Producto : listaProveedor) {
+			model.addElement(Producto.getDescripcion());
+		}
+		cbodescripcion.setModel(model);
 	}
 
 	public String Proveedor(int id) {
@@ -306,7 +316,7 @@ public class vProducto extends JInternalFrame {
 		cbodescripcion.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				cargarComboProducto();
+				cargarComboDescripcion();
 			}
 		});
 		cbodescripcion.setBounds(163, 185, 86, 22);
@@ -327,12 +337,14 @@ public class vProducto extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\producto.pdf");
+					URI uri = new URI(getClass().getResource("/PDF/producto.pdf").toString());
+					File file = new File(uri);
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
+					java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/icono.jpg"));
+					Image img = Image.getInstance(getClass().getResource("/Img/icono.jpg"));
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);
@@ -401,6 +413,9 @@ public class vProducto extends JInternalFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});

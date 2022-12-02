@@ -56,7 +56,7 @@ public class vLogin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 128, 192));
+		contentPane.setBackground(new Color(0, 0, 0));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLocationRelativeTo(null);
@@ -66,6 +66,7 @@ public class vLogin extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Empleado");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(33, 71, 63, 22);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblNewLabel);
@@ -85,15 +86,16 @@ public class vLogin extends JFrame {
 		txtEmpleado.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setForeground(new Color(255, 255, 255));
 		lblPassword.setBounds(33, 134, 63, 22);
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblPassword);
 
 		btnentrada = new JButton("Entrada");
-		btnentrada.setBorder(new LineBorder(new Color(0, 255, 128)));
-		btnentrada.setBackground(new Color(255, 255, 255));
+		btnentrada.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnentrada.setBackground(new Color(0, 0, 0));
 		btnentrada.setFont(new Font("Tw Cen MT", Font.BOLD, 11));
-		btnentrada.setForeground(new Color(0, 128, 255));
+		btnentrada.setForeground(new Color(255, 255, 255));
 		btnentrada.setBounds(70, 218, 134, 38);
 		btnentrada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -114,11 +116,11 @@ public class vLogin extends JFrame {
 		contentPane.add(btnentrada);
 
 		btnCancelar = new JButton("salir");
-		btnCancelar.setBorder(new LineBorder(new Color(0, 128, 255)));
-		btnCancelar.setBackground(new Color(255, 0, 0));
+		btnCancelar.setBorder(new LineBorder(new Color(255, 255, 255)));
+		btnCancelar.setBackground(new Color(0, 0, 0));
 		btnCancelar.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
-		btnCancelar.setForeground(new Color(0, 0, 64));
-		btnCancelar.setBounds(193, 279, 85, 21);
+		btnCancelar.setForeground(new Color(255, 255, 255));
+		btnCancelar.setBounds(101, 279, 85, 21);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "ADIOS");

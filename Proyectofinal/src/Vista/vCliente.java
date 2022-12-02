@@ -46,6 +46,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -264,12 +266,14 @@ public class vCliente extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileOutputStream archivo;
-					File file = new File("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\PDF\\Cliente.pdf");
+					URI uri = new URI(getClass().getResource("/PDF/Cliente.pdf").toString());
+					File file = new File(uri);
 					archivo = new FileOutputStream(file);
 					Document doc = new Document();
 					PdfWriter.getInstance(doc, archivo);
 					doc.open();
-					Image img = Image.getInstance("C:\\Users\\sdeba\\git\\Proyectofilan\\Proyectofinal\\src\\Img\\icono.jpg");
+					java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/icono.jpg"));
+					Image img = Image.getInstance(getClass().getResource("/Img/icono.jpg"));
 					img.setAlignment(Element.ALIGN_CENTER);
 		            img.scaleToFit(200, 200);
 					doc.add(img);
@@ -328,6 +332,9 @@ public class vCliente extends JInternalFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
