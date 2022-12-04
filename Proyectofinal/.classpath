@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="src/Conexion/sqlite-jdbc-3.39.4.0.jar"/>
 	<classpathentry kind="lib" path="src/Conexion/itextpdf-5.5.9.jar"/>
 	<classpathentry kind="lib" path="src/Conexion/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="src/Conexion/sun.misc.BASE64Decoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

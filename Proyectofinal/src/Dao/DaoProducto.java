@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Conexion.Conexion;
+import Modelo.Autos;
 import Modelo.Producto;
 
 public class DaoProducto {
@@ -58,6 +59,39 @@ public class DaoProducto {
 		}
 		return lista;
 		
+	}
+	
+	public ArrayList<Producto> fecthBuscar(String palabra) {
+		ArrayList<Producto> lista2 = new ArrayList<Producto>();
+		try {
+			String sql = "SELECT * FROM Producto WHERE " + "(Idproveedor LIKE ?) OR " + "(Codigo LIKE ?) OR " +"(Precio LIKE ?) OR " +"(Precioventa LIKE ?) OR " + "(Descripcion LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+			ps.setString(4, "%" + palabra + "%");
+			ps.setString(5, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Producto p = new Producto();
+				p.setIdproducto(rs.getInt("Idproducto"));
+				p.setIdproveedor(rs.getInt("Idproveedor"));
+				p.setCodigo(rs.getInt("Codigo"));
+				p.setPrecio(rs.getDouble("Precio"));
+				p.setPrecioventa(rs.getDouble("Precioventa"));
+				p.setDescripcion(rs.getString("Descripcion"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
 	}
 
 	public boolean eliminarProducto(int idproducto) {

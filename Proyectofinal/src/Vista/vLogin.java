@@ -38,7 +38,7 @@ public class vLogin extends JFrame {
 	private JLabel btnlogo;
 	DaoEmpleado dao=new DaoEmpleado();
 	private JLabel lblNewLabel_2;
-
+ 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

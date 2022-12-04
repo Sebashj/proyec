@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Conexion.Conexion;
+import Modelo.Autos;
 import Modelo.Empleado;
 
 public class DaoEmpleado {
@@ -58,6 +59,38 @@ public class DaoEmpleado {
 		}
 		return lista;
 		
+	}
+	public ArrayList<Empleado> fecthBuscar(String palabra) {
+		ArrayList<Empleado> lista2 = new ArrayList<Empleado>();
+		try {
+			String sql = "SELECT * FROM Empleado WHERE " + "(Nombre LIKE ?) OR " + "(Telefono LIKE ?) OR " +"(Domicilio LIKE ?) OR " +"(Puesto LIKE ?) OR " + "(password LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+			ps.setString(4, "%" + palabra + "%");
+			ps.setString(5, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Empleado p = new Empleado();
+				p.setIdempleado(rs.getInt("Idempleado"));
+				p.setNombre(rs.getString("Nombre"));
+				p.setTelefono(rs.getInt("Telefono"));
+				p.setDomicilio(rs.getString("Domicilio"));
+				p.setPuesto(rs.getString("Puesto"));
+				p.setPassword(rs.getString("password"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
 	}
 	
 	public boolean loginEmpleado(Empleado user) {

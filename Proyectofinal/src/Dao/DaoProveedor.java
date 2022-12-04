@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Conexion.Conexion;
+import Modelo.Autos;
 import Modelo.Proveedor;
 
 public class DaoProveedor {
@@ -54,6 +55,35 @@ public class DaoProveedor {
 		}
 		return lista;
 		
+	}
+	
+	public ArrayList<Proveedor> fecthBuscar(String palabra) {
+		ArrayList<Proveedor> lista2 = new ArrayList<Proveedor>();
+		try {
+			String sql = "SELECT * FROM Proveedor WHERE " + "(Nombreproveedor LIKE ?) OR " + "(Contacto LIKE ?) OR " + "(Descripcion LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Proveedor p = new Proveedor();
+				p.setIdproveedor(rs.getInt("IdProveedor"));
+				p.setNombreproveedor(rs.getString("Nombreproveedor"));
+				p.setContacto(rs.getInt("Contacto"));
+				p.setDescripcion(rs.getString("Descripcion"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
 	}
 
 	public boolean eliminarProveedor(int idproveedor) {

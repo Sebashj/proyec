@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Conexion.Conexion;
+import Modelo.Autos;
 import Modelo.Venta;
 
 public class DaoVenta {
@@ -60,6 +61,41 @@ public class DaoVenta {
 		}
 		return lista;
 		
+	}
+	
+	public ArrayList<Venta> fecthBuscar(String palabra) {
+		ArrayList<Venta> lista2 = new ArrayList<Venta>();
+		try {
+			String sql = "SELECT * FROM Venta WHERE " + "(Idcliente LIKE ?) OR " + "(Idempleado LIKE ?) OR " +"(Lugar LIKE ?) OR " +"(Fecha LIKE ?) OR " + "(Monto LIKE ?) OR " + "(Nopedido LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+			ps.setString(4, "%" + palabra + "%");
+			ps.setString(5, "%" + palabra + "%");
+			ps.setString(6, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Venta p = new Venta();
+				p.setIdventa(rs.getInt("Idventa"));
+				p.setIdcliente(rs.getInt("Idcliente"));
+				p.setIdempleado(rs.getInt("Idempleado"));
+				p.setLugar(rs.getString("Lugar"));
+				p.setFecha(rs.getInt("Fecha"));
+				p.setMonto(rs.getInt("Monto"));
+				p.setNopedido(rs.getInt("Nopedido"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
 	}
 
 	public boolean eliminarVenta(int idVenta) {

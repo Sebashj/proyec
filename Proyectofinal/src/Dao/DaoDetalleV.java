@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Conexion.Conexion;
+import Modelo.Autos;
 import Modelo.DetalleV;
 
 public class DaoDetalleV {
@@ -58,6 +59,39 @@ public class DaoDetalleV {
 		}
 		return lista;
 		
+	}
+	
+	public ArrayList<DetalleV> fecthBuscar(String palabra) {
+		ArrayList<DetalleV> lista2 = new ArrayList<DetalleV>();
+		try {
+			String sql = "SELECT * FROM DetalleV WHERE " + "(Idproducto LIKE ?) OR " + "(Idventa LIKE ?) OR " +"(Costo LIKE ?) OR " +"(Cantidad LIKE ?) OR " + "(Importe LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+			ps.setString(4, "%" + palabra + "%");
+			ps.setString(5, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				DetalleV p = new DetalleV();
+				p.setIddetalle(rs.getInt("Iddetalle"));
+				p.setIdproducto(rs.getInt("Idproducto"));
+				p.setIdventa(rs.getInt("Idventa"));
+				p.setCosto(rs.getInt("Costo"));
+				p.setCantidad(rs.getInt("Cantidad"));
+				p.setImporte(rs.getInt("Importe"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
 	}
 
 	public boolean eliminarDetalleV(int idDetalleV) {

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Conexion.Conexion;
+import Modelo.Autos;
 import Modelo.Inventario;
 
 public class DaoInventario {
@@ -56,6 +57,37 @@ public class DaoInventario {
 		}
 		return lista;
 		
+	}
+	
+	public ArrayList<Inventario> fecthBuscar(String palabra) {
+		ArrayList<Inventario> lista2 = new ArrayList<Inventario>();
+		try {
+			String sql = "SELECT * FROM Inventario WHERE " + "(Idproducto LIKE ?) OR " + "(Fecha LIKE ?) OR " +"(Cantidad LIKE ?) OR " + "(Tipodemovimiento LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+			ps.setString(4, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Inventario p = new Inventario();
+				p.setIdinventario(rs.getInt("IdInventario"));
+				p.setIdproducto(rs.getInt("Idproducto"));
+				p.setFecha(rs.getInt("Fecha"));
+				p.setCantidad(rs.getInt("Cantidad"));
+				p.setTipodemovimiento(rs.getString("Tipodemovimiento"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
 	}
 
 	public boolean eliminarInventario(int idinventario) {

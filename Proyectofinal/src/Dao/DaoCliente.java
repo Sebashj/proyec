@@ -56,13 +56,40 @@ public class DaoCliente {
 		
 	}
 	
-	//public boolean loginCliente(Cliente user) {PreparedStatement ps=null;ResultSet rs=null;try {ps=cx.conectar().prepareStatement("SELECT * FROM Cliente WHERE user=? AND password=?");ps.setString(1, user.getUser());ps.setString(2, convertirSHA256(user.getPassword()));rs=ps.executeQuery();if(rs.next()) {return true;}else {			return false;}} catch (SQLException e) {e.printStackTrace();return false;}}
 	
-	public boolean eliminarCliente(int id) {
+	public ArrayList<Cliente> fecthBuscar(String palabra) {
+		ArrayList<Cliente> lista2 = new ArrayList<Cliente>();
+		try {
+			String sql = "SELECT * FROM Cliente WHERE " + "(Domicilio LIKE ?) OR " + "(Telefono LIKE ?) OR " + "(Nombre LIKE ?); ";
+			PreparedStatement ps = cx.conectar().prepareStatement(sql);
+			ps.setString(1, "%" + palabra + "%");
+			ps.setString(2, "%" + palabra + "%");
+			ps.setString(3, "%" + palabra + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Cliente p = new Cliente();
+				p.setDomicilio(rs.getString("Domicilio"));
+				p.setTelefono(rs.getInt("Telefono"));
+				p.setNombre(rs.getString("Nombre"));
+				lista2.add(p);
+			}
+			ps.close();
+			ps = null;
+			//cx.desconectar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			System.out.println("Error en BUSCAR");
+		}
+		return lista2;
+
+	}
+
+	public boolean eliminarCliente(int idcliente) {
 		PreparedStatement ps=null;
 		try {
 			ps=cx.conectar().prepareStatement("DELETE FROM Cliente WHERE idcliente=?");
-			ps.setInt(1, id);
+			ps.setInt(1, idcliente);
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {

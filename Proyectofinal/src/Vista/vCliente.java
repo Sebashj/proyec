@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -70,6 +71,7 @@ public class vCliente extends JInternalFrame {
 	ArrayList<Cliente> lista = new ArrayList<Cliente>();
 	int fila=-1;
 	Cliente Cliente;
+	Funciones fx = new Funciones();
 	private JButton btnpdf;
 	private JTextField txtBuscar;
 	
@@ -94,55 +96,141 @@ public class vCliente extends JInternalFrame {
 		txtnombre.setText("");
 	}
 	
+	public void pdf(){
+		try {
+			FileOutputStream archivo;
+			URI uri = new URI(getClass().getResource("/PDF/Cliente.pdf").toString());
+			File file = new File(uri);
+			archivo = new FileOutputStream(file);
+			Document doc = new Document();
+			PdfWriter.getInstance(doc, archivo);
+			doc.open();
+			java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.png"));
+			Image img = Image.getInstance(getClass().getResource("/Img/logodesot.png"));
+			img.setAlignment(Element.ALIGN_CENTER);
+            img.scaleToFit(200, 200);
+			doc.add(img);
+			Paragraph p = new Paragraph(10);
+			com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
+			p.add(Chunk.NEWLINE);
+			p.add("Cliente");
+			p.add(Chunk.NEWLINE);
+			p.add(Chunk.NEWLINE);
+			p.setAlignment(Element.ALIGN_CENTER);
+			doc.add(p);
+			PdfPTable tabla = new PdfPTable(4);
+			tabla.setWidthPercentage(100);
+			PdfPCell c1 = new PdfPCell(new Phrase(" Idcliente", negrita));
+			PdfPCell c2 = new PdfPCell(new Phrase(" Domicilio", negrita));
+			PdfPCell c3 = new PdfPCell(new Phrase(" Telefono", negrita));
+			PdfPCell c4 = new PdfPCell(new Phrase(" Nombre", negrita));		
+			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c4.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			tabla.addCell(c1);
+			tabla.addCell(c2);
+			tabla.addCell(c3);
+			tabla.addCell(c4);
+
+			for (Cliente u : lista) {
+				tabla.addCell("" + u.getIdcliente());
+				tabla.addCell("" + u.getDomicilio());
+				tabla.addCell("" + u.getTelefono());
+				tabla.addCell("" + u.getNombre());
+
+			}
+
+			doc.add(tabla);
+			Paragraph p1 = new Paragraph(10);
+			p1.add(Chunk.NEWLINE);
+			p1.add("NÚMERO DE REGISTRO " + lista.size());
+			p1.add(Chunk.NEWLINE);
+			p1.add(Chunk.NEWLINE);
+			p1.setAlignment(Element.ALIGN_RIGHT);
+			doc.add(p1);
+			doc.close();
+			archivo.close();
+			Desktop.getDesktop().open(file);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR ARCHIVO");
+		} catch (DocumentException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR DOCUMENTO PDF");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 
 	public vCliente() {
+		setClosable(true);
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(vCliente.class.getResource("/Img/icono.jpg")));
 		//setLocationRelativeTo(null);
 		setTitle("Cliente");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 772, 322);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 921, 533);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 128, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("id");
-		lblNewLabel.setBounds(20, 26, 33, 23);
+		JLabel lblNewLabel = new JLabel("Id");
+		lblNewLabel.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 20));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(20, 94, 33, 23);
 		contentPane.add(lblNewLabel);
 		
 		lblid = new JLabel("1");
-		lblid.setHorizontalAlignment(SwingConstants.LEFT);
-		lblid.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblid.setBounds(73, 26, 86, 23);
+		lblid.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 20));
+		lblid.setForeground(new Color(255, 255, 255));
+		lblid.setHorizontalAlignment(SwingConstants.CENTER);
+		lblid.setBorder(new LineBorder(new Color(255, 255, 255)));
+		lblid.setBounds(64, 73, 80, 72);
 		contentPane.add(lblid);
 		
 		JLabel lblNewLabel_1 = new JLabel("Telefono");
-		lblNewLabel_1.setBounds(10, 92, 53, 23);
+		lblNewLabel_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setBounds(169, 102, 85, 23);
 		contentPane.add(lblNewLabel_1);
 		
 		txtdomocilio = new JTextField();
-		txtdomocilio.setBounds(73, 60, 86, 20);
+		txtdomocilio.setBounds(264, 55, 131, 20);
 		contentPane.add(txtdomocilio);
 		txtdomocilio.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Domicilio");
-		lblNewLabel_1_1.setBounds(10, 60, 53, 23);
+		lblNewLabel_1_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 16));
+		lblNewLabel_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_1.setBounds(169, 54, 85, 23);
 		contentPane.add(lblNewLabel_1_1);
 		
 		txttelefono = new JTextField();
 		txttelefono.setColumns(10);
-		txttelefono.setBounds(73, 94, 86, 20);
+		txttelefono.setBounds(264, 99, 131, 20);
 		contentPane.add(txttelefono);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Nombre");
-		lblNewLabel_1_2.setBounds(10, 122, 53, 23);
+		lblNewLabel_1_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_2.setBounds(169, 142, 85, 23);
 		contentPane.add(lblNewLabel_1_2);
 		
 		txtnombre = new JTextField();
 		txtnombre.setColumns(10);
-		txtnombre.setBounds(73, 124, 86, 20);
+		txtnombre.setBounds(264, 143, 131, 20);
 		contentPane.add(txtnombre);
 		
 		btnAgregar = new JButton("Agregar");
@@ -171,7 +259,8 @@ public class vCliente extends JInternalFrame {
 				
 			}
 		});
-		btnAgregar.setBounds(193, 39, 89, 23);
+		btnAgregar.setBounds(430, 26, 187, 49);
+		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/agreagr.jpg")), 50, 20 ));
 		contentPane.add(btnAgregar);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -195,7 +284,8 @@ public class vCliente extends JInternalFrame {
 				
 			}
 		});
-		btnEliminar.setBounds(193, 72, 89, 23);
+		btnEliminar.setBounds(657, 26, 187, 49);
+		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/eliminar.png")), 50, 20 ));
 		contentPane.add(btnEliminar);
 		
 		btnEditar = new JButton("editar");
@@ -222,11 +312,12 @@ public class vCliente extends JInternalFrame {
 				
 			}
 		});
-		btnEditar.setBounds(193, 105, 89, 23);
+		btnEditar.setBounds(430, 98, 187, 49);
+		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/editar.png")), 50, 20 ));
 		contentPane.add(btnEditar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(314, 29, 398, 238);
+		scrollPane.setBounds(20, 254, 875, 238);
 		contentPane.add(scrollPane);
 		
 		tblCliente = new JTable();
@@ -264,81 +355,11 @@ public class vCliente extends JInternalFrame {
 		btnpdf = new JButton("pdf");
 		btnpdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					FileOutputStream archivo;
-					URI uri = new URI(getClass().getResource("/PDF/Cliente.pdf").toString());
-					File file = new File(uri);
-					archivo = new FileOutputStream(file);
-					Document doc = new Document();
-					PdfWriter.getInstance(doc, archivo);
-					doc.open();
-					java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/icono.jpg"));
-					Image img = Image.getInstance(getClass().getResource("/Img/icono.jpg"));
-					img.setAlignment(Element.ALIGN_CENTER);
-		            img.scaleToFit(200, 200);
-					doc.add(img);
-					Paragraph p = new Paragraph(10);
-					com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
-					p.add(Chunk.NEWLINE);
-					p.add("Cliente");
-					p.add(Chunk.NEWLINE);
-					p.add(Chunk.NEWLINE);
-					p.setAlignment(Element.ALIGN_CENTER);
-					doc.add(p);
-					PdfPTable tabla = new PdfPTable(4);
-					tabla.setWidthPercentage(100);
-					PdfPCell c1 = new PdfPCell(new Phrase(" Idcliente", negrita));
-					PdfPCell c2 = new PdfPCell(new Phrase(" Domicilio", negrita));
-					PdfPCell c3 = new PdfPCell(new Phrase(" Telefono", negrita));
-					PdfPCell c4 = new PdfPCell(new Phrase(" Nombre", negrita));		
-					c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c4.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c2.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c3.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c4.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					tabla.addCell(c1);
-					tabla.addCell(c2);
-					tabla.addCell(c3);
-					tabla.addCell(c4);
-
-					for (Cliente u : lista) {
-						tabla.addCell("" + u.getIdcliente());
-						tabla.addCell("" + u.getDomicilio());
-						tabla.addCell("" + u.getTelefono());
-						tabla.addCell("" + u.getNombre());
-
-					}
-
-					doc.add(tabla);
-					Paragraph p1 = new Paragraph(10);
-					p1.add(Chunk.NEWLINE);
-					p1.add("NÚMERO DE REGISTRO " + lista.size());
-					p1.add(Chunk.NEWLINE);
-					p1.add(Chunk.NEWLINE);
-					p1.setAlignment(Element.ALIGN_RIGHT);
-					doc.add(p1);
-					doc.close();
-					archivo.close();
-					Desktop.getDesktop().open(file);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR ARCHIVO");
-				} catch (DocumentException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR DOCUMENTO PDF");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
-				} catch (URISyntaxException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				pdf();
 			}
 		});
-		btnpdf.setBounds(178, 139, 89, 23);
+		btnpdf.setBounds(659, 98, 185, 47);
+		btnpdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 50, 20 ));
 		contentPane.add(btnpdf);
 		
 		txtBuscar = new JTextField();
@@ -348,16 +369,26 @@ public class vCliente extends JInternalFrame {
 				refrescarTabla2(txtBuscar.getText().toString());
 			}
 		});
-		txtBuscar.setBounds(110, 191, 86, 20);
+		txtBuscar.setBounds(210, 220, 407, 20);
 		contentPane.add(txtBuscar);
 		txtBuscar.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Buscar:");
+		lblNewLabel_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 15));
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setBackground(new Color(255, 255, 255));
+		lblNewLabel_2.setBounds(53, 214, 142, 29);
+		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/lupa.png")), 50, 20 ));
+		contentPane.add(lblNewLabel_2);
 		refrescarTabla();
 	}
+	
+	
 	public void refrescarTabla2(String palabra) {
 		while (modelo.getRowCount() > 0) {
 			modelo.removeRow(0);
 		}
-		lista=dao.fetchClientes();
+		lista=dao.fecthBuscar(palabra);
 		for(Cliente u: lista) {
 				Object o[]=new Object [4];
 				o[0]=u.getIdcliente();

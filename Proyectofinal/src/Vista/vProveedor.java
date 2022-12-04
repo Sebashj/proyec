@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,6 +29,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import Dao.DaoProveedor;
+import Modelo.Autos;
 import Modelo.Producto;
 import Modelo.Proveedor;
 
@@ -48,6 +50,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class vProveedor extends JInternalFrame {
 
@@ -64,9 +68,12 @@ public class vProveedor extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private JTable tblProveedor;
 	ArrayList<Proveedor> lista = new ArrayList<Proveedor>();
+	Funciones fx = new Funciones();
 	int fila=-1;
 	Proveedor Proveedor;
 	private JButton btnPdf;
+	private JLabel lblNewLabel_2;
+	private JTextField txtBuscar;
 	
 
 	public static void main(String[] args) {
@@ -88,55 +95,136 @@ public class vProveedor extends JInternalFrame {
 		txtcontacto.setText("");
 		txtnombre.setText("");
 	}
+	
+	public void pdf() {
+		try {
+			FileOutputStream archivo;
+			URI uri = new URI(getClass().getResource("/PDF/Proveedor.pdf").toString());
+			File file = new File(uri);
+			archivo = new FileOutputStream(file);
+			Document doc = new Document();
+			PdfWriter.getInstance(doc, archivo);
+			doc.open();
+			java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.png"));
+			Image img = Image.getInstance(getClass().getResource("/Img/logodesot.png"));
+			img.setAlignment(Element.ALIGN_CENTER);
+            img.scaleToFit(200, 200);
+			doc.add(img);
+			Paragraph p = new Paragraph(10);
+			com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
+			p.add(Chunk.NEWLINE);
+			p.add("Proveedor");
+			p.add(Chunk.NEWLINE);
+			p.add(Chunk.NEWLINE);
+			p.setAlignment(Element.ALIGN_CENTER);
+			doc.add(p);
+			PdfPTable tabla = new PdfPTable(4);
+			tabla.setWidthPercentage(100);
+			PdfPCell c1 = new PdfPCell(new Phrase(" Idproveedor", negrita));
+			PdfPCell c2 = new PdfPCell(new Phrase(" Nombreproveedor", negrita));
+			PdfPCell c3 = new PdfPCell(new Phrase(" Contacto", negrita));
+			PdfPCell c4 = new PdfPCell(new Phrase(" Descripcion", negrita));		
+			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c4.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			tabla.addCell(c1);
+			tabla.addCell(c2);
+			tabla.addCell(c3);
+			tabla.addCell(c4);
+
+			for (Proveedor u : lista) {
+				tabla.addCell("" + u.getIdproveedor());
+				tabla.addCell("" + u.getNombreproveedor());
+				tabla.addCell("" + u.getContacto());
+				tabla.addCell("" + u.getDescripcion());
+
+			}
+
+			doc.add(tabla);
+			Paragraph p1 = new Paragraph(10);
+			p1.add(Chunk.NEWLINE);
+			p1.add("NÚMERO DE REGISTRO " + lista.size());
+			p1.add(Chunk.NEWLINE);
+			p1.add(Chunk.NEWLINE);
+			p1.setAlignment(Element.ALIGN_RIGHT);
+			doc.add(p1);
+			doc.close();
+			archivo.close();
+			Desktop.getDesktop().open(file);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR ARCHIVO");
+		} catch (DocumentException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR DOCUMENTO PDF");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 
 	public vProveedor() {
+		setClosable(true);
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(vProveedor.class.getResource("/Img/icono.jpg")));
 		//setLocationRelativeTo(null);
 		setTitle("Proveedor");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 772, 322);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 921, 533);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 128, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("id");
-		lblNewLabel.setBounds(20, 26, 33, 23);
+		JLabel lblNewLabel = new JLabel("ID");
+		lblNewLabel.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel.setBounds(22, 42, 33, 23);
 		contentPane.add(lblNewLabel);
 		
 		lblid = new JLabel("1");
 		lblid.setHorizontalAlignment(SwingConstants.LEFT);
 		lblid.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblid.setBounds(73, 26, 86, 23);
+		lblid.setBounds(75, 44, 86, 23);
 		contentPane.add(lblid);
 		
 		JLabel lblNewLabel_1 = new JLabel("Contacto");
-		lblNewLabel_1.setBounds(10, 92, 53, 23);
+		lblNewLabel_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(10, 126, 104, 23);
 		contentPane.add(lblNewLabel_1);
 		
 		txtdescripcion = new JTextField();
-		txtdescripcion.setBounds(106, 127, 86, 20);
+		txtdescripcion.setBounds(328, 45, 129, 20);
 		contentPane.add(txtdescripcion);
 		txtdescripcion.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Descripcion");
-		lblNewLabel_1_1.setBounds(10, 126, 86, 23);
+		lblNewLabel_1_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_1.setBounds(212, 42, 86, 23);
 		contentPane.add(lblNewLabel_1_1);
 		
 		txtcontacto = new JTextField();
 		txtcontacto.setColumns(10);
-		txtcontacto.setBounds(73, 94, 86, 20);
+		txtcontacto.setBounds(124, 129, 129, 20);
 		contentPane.add(txtcontacto);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Nombre");
-		lblNewLabel_1_2.setBounds(10, 60, 53, 23);
+		lblNewLabel_1_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_2.setBounds(10, 89, 104, 23);
 		contentPane.add(lblNewLabel_1_2);
 		
 		txtnombre = new JTextField();
 		txtnombre.setColumns(10);
-		txtnombre.setBounds(73, 60, 86, 20);
+		txtnombre.setBounds(124, 92, 129, 20);
 		contentPane.add(txtnombre);
 		
 		btnAgregar = new JButton("Agregar");
@@ -165,7 +253,8 @@ public class vProveedor extends JInternalFrame {
 				
 			}
 		});
-		btnAgregar.setBounds(193, 39, 89, 23);
+		btnAgregar.setBounds(497, 28, 140, 55);
+		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/agreagr.jpg")), 50, 20 ));
 		contentPane.add(btnAgregar);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -189,7 +278,8 @@ public class vProveedor extends JInternalFrame {
 				
 			}
 		});
-		btnEliminar.setBounds(193, 72, 89, 23);
+		btnEliminar.setBounds(658, 28, 140, 55);
+		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/eliminar.png")), 50, 20 ));
 		contentPane.add(btnEliminar);
 		
 		btnEditar = new JButton("editar");
@@ -216,11 +306,12 @@ public class vProveedor extends JInternalFrame {
 				
 			}
 		});
-		btnEditar.setBounds(193, 105, 89, 23);
+		btnEditar.setBounds(497, 94, 140, 55);
+		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/editar.png")), 50, 20 ));
 		contentPane.add(btnEditar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(314, 29, 398, 238);
+		scrollPane.setBounds(10, 246, 885, 246);
 		contentPane.add(scrollPane);
 		
 		tblProveedor = new JTable();
@@ -259,84 +350,48 @@ public class vProveedor extends JInternalFrame {
 		btnPdf = new JButton("Pdf");
 		btnPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					FileOutputStream archivo;
-					URI uri = new URI(getClass().getResource("/PDF/Proveedor.pdf").toString());
-					File file = new File(uri);
-					archivo = new FileOutputStream(file);
-					Document doc = new Document();
-					PdfWriter.getInstance(doc, archivo);
-					doc.open();
-					java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/icono.jpg"));
-					Image img = Image.getInstance(getClass().getResource("/Img/icono.jpg"));
-					img.setAlignment(Element.ALIGN_CENTER);
-		            img.scaleToFit(200, 200);
-					doc.add(img);
-					Paragraph p = new Paragraph(10);
-					com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
-					p.add(Chunk.NEWLINE);
-					p.add("Proveedor");
-					p.add(Chunk.NEWLINE);
-					p.add(Chunk.NEWLINE);
-					p.setAlignment(Element.ALIGN_CENTER);
-					doc.add(p);
-					PdfPTable tabla = new PdfPTable(4);
-					tabla.setWidthPercentage(100);
-					PdfPCell c1 = new PdfPCell(new Phrase(" Idproveedor", negrita));
-					PdfPCell c2 = new PdfPCell(new Phrase(" Nombreproveedor", negrita));
-					PdfPCell c3 = new PdfPCell(new Phrase(" Contacto", negrita));
-					PdfPCell c4 = new PdfPCell(new Phrase(" Descripcion", negrita));		
-					c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c4.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c2.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c3.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c4.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					tabla.addCell(c1);
-					tabla.addCell(c2);
-					tabla.addCell(c3);
-					tabla.addCell(c4);
-
-					for (Proveedor u : lista) {
-						tabla.addCell("" + u.getIdproveedor());
-						tabla.addCell("" + u.getNombreproveedor());
-						tabla.addCell("" + u.getContacto());
-						tabla.addCell("" + u.getDescripcion());
-
-					}
-
-					doc.add(tabla);
-					Paragraph p1 = new Paragraph(10);
-					p1.add(Chunk.NEWLINE);
-					p1.add("NÚMERO DE REGISTRO " + lista.size());
-					p1.add(Chunk.NEWLINE);
-					p1.add(Chunk.NEWLINE);
-					p1.setAlignment(Element.ALIGN_RIGHT);
-					doc.add(p1);
-					doc.close();
-					archivo.close();
-					Desktop.getDesktop().open(file);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR ARCHIVO");
-				} catch (DocumentException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR DOCUMENTO PDF");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
-				} catch (URISyntaxException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				pdf();
 			}
 		});
-		btnPdf.setBounds(140, 162, 89, 23);
+		btnPdf.setBounds(658, 92, 140, 55);
+		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 50, 20 ));
 		contentPane.add(btnPdf);
+		
+		lblNewLabel_2 = new JLabel("Buscar:");
+		lblNewLabel_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(303, 145, 154, 45);
+		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/lupa.png")), 50, 20 ));
+		contentPane.add(lblNewLabel_2);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla2(txtBuscar.getText().toString());
+			}
+		});
+		txtBuscar.setBounds(212, 201, 324, 20);
+		contentPane.add(txtBuscar);
+		txtBuscar.setColumns(10);
 		refrescarTabla();
 	}
+	
+	public void refrescarTabla2(String palabra) {
+		while (modelo.getRowCount() > 0) {
+			modelo.removeRow(0);
+		}
+		lista=dao.fecthBuscar(palabra);
+		for(Proveedor u: lista) {
+			Object o[]=new Object [4];
+			o[0]=u.getIdproveedor();
+			o[1]=u.getNombreproveedor();
+			o[2]=u.getContacto();
+			o[3]=u.getDescripcion();
+			modelo.addRow(o);
+		}
+		tblProveedor.setModel(modelo);
+	}
+	
 	public void refrescarTabla() {
 		while(modelo.getRowCount()>0) {
 		modelo.removeRow(0);

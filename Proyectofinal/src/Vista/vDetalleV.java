@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +34,7 @@ import Dao.DaoDetalleV;
 import Dao.DaoProducto;
 import Dao.DaoProveedor;
 import Dao.DaoVenta;
+import Modelo.Autos;
 import Modelo.DetalleV;
 import Modelo.Producto;
 import Modelo.Proveedor;
@@ -58,6 +60,8 @@ import java.awt.Toolkit;
 import javax.swing.JComboBox;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class vDetalleV extends JInternalFrame {
 
@@ -79,6 +83,7 @@ public class vDetalleV extends JInternalFrame {
 	ArrayList<Producto> listaProducto=new ArrayList<Producto>();
 	ArrayList<Proveedor> listaProveedor=new ArrayList<Proveedor>();
 	ArrayList<Venta> listaVenta=new ArrayList<Venta>();
+	Funciones fx = new Funciones();
 	private JComboBox cboventa;
 	private JComboBox cboproducto;
 	private JButton btnPdf;
@@ -140,16 +145,102 @@ public class vDetalleV extends JInternalFrame {
 		}
 		return (Integer) null;
 	}
+	
+	public void pdf() {
+		try {
+			FileOutputStream archivo;
+			URI uri = new URI(getClass().getResource("/PDF/detalleV.pdf").toString());
+			File file = new File(uri);
+			archivo = new FileOutputStream(file);
+			Document doc = new Document();
+			PdfWriter.getInstance(doc, archivo);
+			doc.open();
+			java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.png"));
+			Image img = Image.getInstance(getClass().getResource("/Img/logodesot.png"));
+			img.setAlignment(Element.ALIGN_CENTER);
+            img.scaleToFit(200, 200);
+			doc.add(img);
+			Paragraph p = new Paragraph(10);
+			com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
+			p.add(Chunk.NEWLINE);
+			p.add("Detalle Venta");
+			p.add(Chunk.NEWLINE);
+			p.add(Chunk.NEWLINE);
+			p.setAlignment(Element.ALIGN_CENTER);
+			doc.add(p);
+			PdfPTable tabla = new PdfPTable(6);
+			tabla.setWidthPercentage(100);
+			PdfPCell c1 = new PdfPCell(new Phrase(" Iddetalle", negrita));
+			PdfPCell c2 = new PdfPCell(new Phrase(" Idproducto", negrita));
+			PdfPCell c3 = new PdfPCell(new Phrase(" Idventa", negrita));
+			PdfPCell c4 = new PdfPCell(new Phrase(" Costo", negrita));
+			PdfPCell c5 = new PdfPCell(new Phrase(" Cantidad", negrita));
+			PdfPCell c6 = new PdfPCell(new Phrase(" Importe", negrita));		
+			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c4.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c5.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c6.setHorizontalAlignment(Element.ALIGN_CENTER);
+			c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c5.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			c6.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			tabla.addCell(c1);
+			tabla.addCell(c2);
+			tabla.addCell(c3);
+			tabla.addCell(c4);
+			tabla.addCell(c5);
+			tabla.addCell(c6);
+
+			for (DetalleV u : lista) {
+				tabla.addCell("" + u.getIddetalle());
+				tabla.addCell("" + u.getIdproducto());
+				tabla.addCell("" + u.getIdventa());
+				tabla.addCell("" + u.getCosto());
+				tabla.addCell("" + u.getCantidad());
+				tabla.addCell("" + u.getImporte());
+
+			}
+
+			doc.add(tabla);
+			Paragraph p1 = new Paragraph(10);
+			p1.add(Chunk.NEWLINE);
+			p1.add("NÚMERO DE REGISTRO " + lista.size());
+			p1.add(Chunk.NEWLINE);
+			p1.add(Chunk.NEWLINE);
+			p1.setAlignment(Element.ALIGN_RIGHT);
+			doc.add(p1);
+			doc.close();
+			archivo.close();
+			Desktop.getDesktop().open(file);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR ARCHIVO");
+		} catch (DocumentException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR DOCUMENTO PDF");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 
 
 	public vDetalleV() {
 		setClosable(true);
-		//setIconImage(Toolkit.getDefaultToolkit().getImage(vDetalleV.class.getResource("/Img/icono.jpg")));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage(vDetalleV.class.getResource("/Img/logodesot.png")));
 		//setLocationRelativeTo(null);
 		setTitle("DetalleV");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 444, 502);
+		setBounds(100, 100, 921, 533);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 128, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 
@@ -167,25 +258,28 @@ public class vDetalleV extends JInternalFrame {
 		contentPane.add(lblid);
 		
 		JLabel lblNewLabel_1 = new JLabel("Venta");
-		lblNewLabel_1.setBounds(10, 92, 133, 23);
+		lblNewLabel_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(10, 92, 112, 23);
 		contentPane.add(lblNewLabel_1);
 		
 		txtcosto = new JTextField();
-		txtcosto.setBounds(163, 124, 86, 20);
+		txtcosto.setBounds(387, 59, 150, 20);
 		contentPane.add(txtcosto);
 		txtcosto.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Costo");
-		lblNewLabel_1_1.setBounds(10, 123, 133, 23);
+		lblNewLabel_1_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_1.setBounds(291, 56, 86, 23);
 		contentPane.add(lblNewLabel_1_1);
 		
 		txtimporte = new JTextField();
 		txtimporte.setColumns(10);
-		txtimporte.setBounds(163, 185, 86, 20);
+		txtimporte.setBounds(132, 129, 117, 20);
 		contentPane.add(txtimporte);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Producto");
-		lblNewLabel_1_2.setBounds(10, 58, 133, 23);
+		lblNewLabel_1_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_2.setBounds(10, 58, 112, 23);
 		contentPane.add(lblNewLabel_1_2);
 		
 		btnAgregar = new JButton("Agregar");
@@ -213,10 +307,11 @@ public class vDetalleV extends JInternalFrame {
 					ex.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Error");
 				}
-				
+
 			}
 		});
-		btnAgregar.setBounds(294, 26, 89, 23);
+		btnAgregar.setBounds(557, 44, 138, 35);
+		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/agreagr.jpg")), 50, 20 ));
 		contentPane.add(btnAgregar);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -240,7 +335,8 @@ public class vDetalleV extends JInternalFrame {
 				
 			}
 		});
-		btnEliminar.setBounds(294, 58, 89, 23);
+		btnEliminar.setBounds(716, 44, 136, 35);
+		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/eliminar.png")), 50, 20 ));
 		contentPane.add(btnEliminar);
 		
 		btnEditar = new JButton("editar");
@@ -269,11 +365,12 @@ public class vDetalleV extends JInternalFrame {
 				
 			}
 		});
-		btnEditar.setBounds(294, 92, 89, 23);
+		btnEditar.setBounds(557, 95, 138, 35);
+		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/editar.png")), 50, 20 ));
 		contentPane.add(btnEditar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 218, 399, 238);
+		scrollPane.setBounds(10, 218, 885, 274);
 		contentPane.add(scrollPane);
 		
 		tblDetalleV = new JTable();
@@ -313,16 +410,18 @@ public class vDetalleV extends JInternalFrame {
 		tblDetalleV.setModel(modelo);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Cantidad");
-		lblNewLabel_1_1_1.setBounds(10, 150, 133, 23);
+		lblNewLabel_1_1_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_1_1.setBounds(291, 92, 86, 23);
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("Importe");
-		lblNewLabel_1_1_2.setBounds(10, 184, 133, 23);
+		lblNewLabel_1_1_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
+		lblNewLabel_1_1_2.setBounds(10, 126, 112, 23);
 		contentPane.add(lblNewLabel_1_1_2);
 		
 		txtcantidad = new JTextField();
 		txtcantidad.setColumns(10);
-		txtcantidad.setBounds(163, 155, 86, 20);
+		txtcantidad.setBounds(387, 95, 150, 20);
 		contentPane.add(txtcantidad);
 		
 		cboventa = new JComboBox();
@@ -332,7 +431,7 @@ public class vDetalleV extends JInternalFrame {
 				cargarComboVenta();
 			}
 		});
-		cboventa.setBounds(163, 92, 86, 22);
+		cboventa.setBounds(132, 92, 117, 22);
 		contentPane.add(cboventa);
 		
 		cboproducto = new JComboBox();
@@ -342,100 +441,23 @@ public class vDetalleV extends JInternalFrame {
 				cargarComboProducto();
 			}
 		});
-		cboproducto.setBounds(163, 58, 86, 22);
+		cboproducto.setBounds(132, 58, 117, 22);
 		contentPane.add(cboproducto);
 		
 		btnPdf = new JButton("pdf");
 		btnPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					FileOutputStream archivo;
-					URI uri = new URI(getClass().getResource("/PDF/detalleV.pdf").toString());
-					File file = new File(uri);
-					archivo = new FileOutputStream(file);
-					Document doc = new Document();
-					PdfWriter.getInstance(doc, archivo);
-					doc.open();
-					java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/icono.jpg"));
-					Image img = Image.getInstance(getClass().getResource("/Img/icono.jpg"));
-					img.setAlignment(Element.ALIGN_CENTER);
-		            img.scaleToFit(200, 200);
-					doc.add(img);
-					Paragraph p = new Paragraph(10);
-					com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
-					p.add(Chunk.NEWLINE);
-					p.add("Detalle Venta");
-					p.add(Chunk.NEWLINE);
-					p.add(Chunk.NEWLINE);
-					p.setAlignment(Element.ALIGN_CENTER);
-					doc.add(p);
-					PdfPTable tabla = new PdfPTable(6);
-					tabla.setWidthPercentage(100);
-					PdfPCell c1 = new PdfPCell(new Phrase(" Iddetalle", negrita));
-					PdfPCell c2 = new PdfPCell(new Phrase(" Idproducto", negrita));
-					PdfPCell c3 = new PdfPCell(new Phrase(" Idventa", negrita));
-					PdfPCell c4 = new PdfPCell(new Phrase(" Costo", negrita));
-					PdfPCell c5 = new PdfPCell(new Phrase(" Cantidad", negrita));
-					PdfPCell c6 = new PdfPCell(new Phrase(" Importe", negrita));		
-					c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c4.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c5.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c6.setHorizontalAlignment(Element.ALIGN_CENTER);
-					c1.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c2.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c3.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c4.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c5.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					c6.setBackgroundColor(BaseColor.LIGHT_GRAY);
-					tabla.addCell(c1);
-					tabla.addCell(c2);
-					tabla.addCell(c3);
-					tabla.addCell(c4);
-					tabla.addCell(c5);
-					tabla.addCell(c6);
-
-					for (DetalleV u : lista) {
-						tabla.addCell("" + u.getIddetalle());
-						tabla.addCell("" + u.getIdproducto());
-						tabla.addCell("" + u.getIdventa());
-						tabla.addCell("" + u.getCosto());
-						tabla.addCell("" + u.getCantidad());
-						tabla.addCell("" + u.getImporte());
-
-					}
-
-					doc.add(tabla);
-					Paragraph p1 = new Paragraph(10);
-					p1.add(Chunk.NEWLINE);
-					p1.add("NÚMERO DE REGISTRO " + lista.size());
-					p1.add(Chunk.NEWLINE);
-					p1.add(Chunk.NEWLINE);
-					p1.setAlignment(Element.ALIGN_RIGHT);
-					doc.add(p1);
-					doc.close();
-					archivo.close();
-					Desktop.getDesktop().open(file);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR ARCHIVO");
-				} catch (DocumentException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR DOCUMENTO PDF");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "ERROR AL CREAR IO");
-				} catch (URISyntaxException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				pdf();
 			}
 		});
-		btnPdf.setBounds(294, 123, 89, 23);
+		btnPdf.setBounds(716, 95, 136, 35);
+		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 50, 20 ));
 		contentPane.add(btnPdf);
 		refrescarTabla();
+		
+
 	}
+	
 	public void refrescarTabla() {
 		while(modelo.getRowCount()>0) {
 		modelo.removeRow(0);
