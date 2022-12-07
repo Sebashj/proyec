@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -29,7 +31,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import Dao.DaoProveedor;
-import Modelo.Autos;
 import Modelo.Producto;
 import Modelo.Proveedor;
 
@@ -50,8 +51,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class vProveedor extends JInternalFrame {
 
@@ -68,12 +67,10 @@ public class vProveedor extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private JTable tblProveedor;
 	ArrayList<Proveedor> lista = new ArrayList<Proveedor>();
-	Funciones fx = new Funciones();
 	int fila=-1;
 	Proveedor Proveedor;
-	private JButton btnPdf;
+	private JButton btnpdf;
 	private JLabel lblNewLabel_2;
-	private JTextField txtBuscar;
 	
 
 	public static void main(String[] args) {
@@ -95,7 +92,6 @@ public class vProveedor extends JInternalFrame {
 		txtcontacto.setText("");
 		txtnombre.setText("");
 	}
-	
 	public void pdf() {
 		try {
 			FileOutputStream archivo;
@@ -108,7 +104,7 @@ public class vProveedor extends JInternalFrame {
 			java.awt.Image Img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.jpg"));
 			Image Img = Image.getInstance(getClass().getResource("/Img/logodesot.jpg"));
 			Img.setAlignment(Element.ALIGN_CENTER);
-            Img.scaleToFit(200, 200);
+	        Img.scaleToFit(200, 200);
 			doc.add(Img);
 			Paragraph p = new Paragraph(10);
 			com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
@@ -172,62 +168,80 @@ public class vProveedor extends JInternalFrame {
 	}
 
 	public vProveedor() {
-		setClosable(true);
 		//setIconImage(Toolkit.getDefaultToolkit().getImage(vProveedor.class.getResource("/Img/icono.jpg")));
 		//setLocationRelativeTo(null);
 		setTitle("Proveedor");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 921, 533);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 920, 530);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 128, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+		Funciones fx = new Funciones();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("ID");
-		lblNewLabel.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
-		lblNewLabel.setBounds(22, 42, 33, 23);
+		JLabel lblNewLabel = new JLabel("id");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
+		lblNewLabel.setBounds(20, 26, 33, 23);
 		contentPane.add(lblNewLabel);
 		
 		lblid = new JLabel("1");
+		lblid.setForeground(new Color(255, 255, 255));
+		lblid.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
 		lblid.setHorizontalAlignment(SwingConstants.LEFT);
 		lblid.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblid.setBounds(75, 44, 86, 23);
+		lblid.setBounds(73, 26, 86, 23);
 		contentPane.add(lblid);
 		
 		JLabel lblNewLabel_1 = new JLabel("Contacto");
-		lblNewLabel_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(10, 126, 104, 23);
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
+		lblNewLabel_1.setBounds(10, 92, 53, 23);
 		contentPane.add(lblNewLabel_1);
 		
 		txtdescripcion = new JTextField();
-		txtdescripcion.setBounds(328, 45, 129, 20);
+		txtdescripcion.setForeground(new Color(255, 255, 255));
+		txtdescripcion.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtdescripcion.setBackground(new Color(0, 0, 0));
+		txtdescripcion.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
+		txtdescripcion.setBounds(73, 127, 86, 20);
 		contentPane.add(txtdescripcion);
 		txtdescripcion.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Descripcion");
-		lblNewLabel_1_1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
-		lblNewLabel_1_1.setBounds(212, 42, 86, 23);
+		lblNewLabel_1_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_1.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
+		lblNewLabel_1_1.setBounds(10, 126, 86, 23);
 		contentPane.add(lblNewLabel_1_1);
 		
 		txtcontacto = new JTextField();
+		txtcontacto.setForeground(new Color(255, 255, 255));
+		txtcontacto.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtcontacto.setBackground(new Color(0, 0, 0));
+		txtcontacto.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
 		txtcontacto.setColumns(10);
-		txtcontacto.setBounds(124, 129, 129, 20);
+		txtcontacto.setBounds(73, 94, 86, 20);
 		contentPane.add(txtcontacto);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Nombre");
-		lblNewLabel_1_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
-		lblNewLabel_1_2.setBounds(10, 89, 104, 23);
+		lblNewLabel_1_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1_2.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
+		lblNewLabel_1_2.setBounds(10, 60, 53, 23);
 		contentPane.add(lblNewLabel_1_2);
 		
 		txtnombre = new JTextField();
+		txtnombre.setForeground(new Color(255, 255, 255));
+		txtnombre.setBorder(new LineBorder(new Color(255, 255, 255)));
+		txtnombre.setBackground(new Color(0, 0, 0));
+		txtnombre.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
 		txtnombre.setColumns(10);
-		txtnombre.setBounds(124, 92, 129, 20);
+		txtnombre.setBounds(73, 60, 86, 20);
 		contentPane.add(txtnombre);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.setForeground(new Color(255, 255, 255));
+		btnAgregar.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -253,11 +267,22 @@ public class vProveedor extends JInternalFrame {
 				
 			}
 		});
-		btnAgregar.setBounds(497, 28, 140, 55);
-		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/agreagr.jpg")), 50, 20 ));
+
+	    btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/agregar.png")), 20,20 ));
+        btnAgregar.setBackground(new Color(0, 0, 0)); 
+        btnAgregar.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnAgregar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnAgregar.setHorizontalAlignment(SwingConstants.CENTER);
+        this.getContentPane().add(btnAgregar, new AbsoluteConstraints(10, 240, 80, 80));
 		contentPane.add(btnAgregar);
 		
+	btnAgregar.setBounds(411, 141, 89, 50);
+	contentPane.add(btnAgregar);
+	
+		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setForeground(new Color(255, 255, 255));
+		btnEliminar.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -278,11 +303,19 @@ public class vProveedor extends JInternalFrame {
 				
 			}
 		});
-		btnEliminar.setBounds(658, 28, 140, 55);
-		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/eliminar.png")), 50, 20 ));
+
+	    btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/Eliminar.png")), 20,20 ));
+        btnEliminar.setBackground(new Color(0, 0, 0));
+        btnEliminar.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnEliminar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnEliminar.setHorizontalAlignment(SwingConstants.CENTER);
+        this.getContentPane().add(btnEliminar, new AbsoluteConstraints(10, 240, 80, 80));
 		contentPane.add(btnEliminar);
-		
+	    btnEliminar.setBounds(411, 36, 89, 47);
+	    contentPane.add(btnEliminar);
 		btnEditar = new JButton("editar");
+		btnEditar.setForeground(new Color(255, 255, 255));
+		btnEditar.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -306,12 +339,17 @@ public class vProveedor extends JInternalFrame {
 				
 			}
 		});
-		btnEditar.setBounds(497, 94, 140, 55);
-		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/editar.png")), 50, 20 ));
+		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/guardar.png")), 20,20 ));
+        btnEditar.setBackground(new Color(0, 0, 0));
+        btnEditar.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnEditar.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnEditar.setHorizontalAlignment(SwingConstants.CENTER);
+        this.getContentPane().add(btnEditar, new AbsoluteConstraints(10, 240, 80, 80));
 		contentPane.add(btnEditar);
+		btnEditar.setBounds(640, 36, 89, 47);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 246, 885, 246);
+		scrollPane.setBounds(20, 236, 837, 238);
 		contentPane.add(scrollPane);
 		
 		tblProveedor = new JTable();
@@ -347,51 +385,32 @@ public class vProveedor extends JInternalFrame {
 		modelo.addColumn("Descripcion");
 		tblProveedor.setModel(modelo);
 		
-		btnPdf = new JButton("Pdf");
-		btnPdf.addActionListener(new ActionListener() {
+		btnpdf = new JButton("");
+		btnpdf.setFont(new java.awt.Font("Verdana", java.awt.Font.ITALIC, 11));
+		btnpdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pdf();
+			pdf();
 			}
 		});
-		btnPdf.setBounds(658, 92, 140, 55);
-		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pdf.png")), 50, 20 ));
-		contentPane.add(btnPdf);
+		btnpdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 40,40 ));
+		btnpdf.setBackground(new Color(0, 0, 0));
+		btnpdf.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnpdf.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnpdf.setHorizontalAlignment(SwingConstants.CENTER);
+	    this.getContentPane().add(btnpdf, new AbsoluteConstraints(10, 240, 80, 80));
+		contentPane.add(btnpdf);
+		contentPane.add(btnpdf);
 		
-		lblNewLabel_2 = new JLabel("Buscar:");
-		lblNewLabel_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(303, 145, 154, 45);
-		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/lupa.png")), 50, 20 ));
+		btnpdf.setBounds(640, 141, 89, 50);
+		contentPane.add(btnpdf);
+		
+		lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setOpaque(true);
+		lblNewLabel_2.setBackground(new Color(0, 0, 0));
+		lblNewLabel_2.setBounds(0, 0, 916, 531);
 		contentPane.add(lblNewLabel_2);
-		
-		txtBuscar = new JTextField();
-		txtBuscar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				refrescarTabla2(txtBuscar.getText().toString());
-			}
-		});
-		txtBuscar.setBounds(212, 201, 324, 20);
-		contentPane.add(txtBuscar);
-		txtBuscar.setColumns(10);
 		refrescarTabla();
 	}
-	
-	public void refrescarTabla2(String palabra) {
-		while (modelo.getRowCount() > 0) {
-			modelo.removeRow(0);
-		}
-		lista=dao.fecthBuscar(palabra);
-		for(Proveedor u: lista) {
-			Object o[]=new Object [4];
-			o[0]=u.getIdproveedor();
-			o[1]=u.getNombreproveedor();
-			o[2]=u.getContacto();
-			o[3]=u.getDescripcion();
-			modelo.addRow(o);
-		}
-		tblProveedor.setModel(modelo);
-	}
-	
 	public void refrescarTabla() {
 		while(modelo.getRowCount()>0) {
 		modelo.removeRow(0);

@@ -8,10 +8,10 @@ public class Conexion {
         Connection cx = null;
         public Connection conectar() {
         try {
-         //   Class.forName("org.sqlite.JDBC");
-       // cx =DriverManager.getConnection("jdbc:sqlite:BaseDeDatos.db");
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        cx =DriverManager.getConnection("jdbc:mysql://localhost:3306/basededatos","root","");
+            Class.forName("org.sqlite.JDBC");
+        cx =DriverManager.getConnection("jdbc:sqlite:BaseDeDatos.db");
+       // Class.forName("com.mysql.cj.jdbc.Driver");
+       // cx =DriverManager.getConnection("jdbc:mysql://localhost:3306/basededatos","root","");
         System.out.println("Conexion existosa ");
         } catch (ClassNotFoundException | SQLException e) {
            e.printStackTrace();
