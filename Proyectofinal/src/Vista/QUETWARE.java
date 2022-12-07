@@ -114,7 +114,7 @@ public class QUETWARE extends JInternalFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 921, 533);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 128, 192));
+		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 
@@ -122,6 +122,7 @@ public class QUETWARE extends JInternalFrame {
 		contentPane.setLayout(null);
 		
 		lblNewLabel = new JLabel("QUETWARE");
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new java.awt.Font("Rockwell Extra Bold", java.awt.Font.BOLD, 20));
 		lblNewLabel.setBounds(95, 92, 296, 90);
 		contentPane.add(lblNewLabel);
@@ -132,6 +133,7 @@ public class QUETWARE extends JInternalFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("<html> QUETWARE es una empresa que tiene como vision  crear sotwares para la gestion y el manejo de datos de un corporativo y/o microempresa<html>");
+		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.BOLD, 19));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(80, 283, 683, 170);

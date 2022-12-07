@@ -380,7 +380,7 @@ public class vPrincial extends JFrame {
 		
 		
 		JLabel lblNewLabel_1 = new JLabel("Incar");
-		lblNewLabel_1.setForeground(new Color(128, 255, 255));
+		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.BOLD, 25));
 		lblNewLabel_1.setBounds(220, 15, 192, 36);
 		contentPane.add(lblNewLabel_1);
@@ -388,7 +388,7 @@ public class vPrincial extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("La inovacion distinge a los lideres de los seguidores");
 		lblNewLabel_2.setFont(new Font("NSimSun", Font.BOLD, 15));
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(259, 60, 454, 26);
+		lblNewLabel_2.setBounds(220, 62, 454, 26);
 		contentPane.add(lblNewLabel_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Venta");
