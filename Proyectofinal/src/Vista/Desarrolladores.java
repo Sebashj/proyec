@@ -128,7 +128,7 @@ public class Desarrolladores extends JInternalFrame {
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(439, 27, 335, 229);
-		lblNewLabel_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/desa.png")), 335, 229 ));
+		lblNewLabel_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/desa.png")), 335, 229 ));
 		contentPane.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("<html> somos un grupo pequeño de desarrollados que se enfoca en inovar y mejorar su compañia y sus sotware<html>");

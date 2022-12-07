@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Conexion.Conexion;
 import Modelo.Cliente;
 
@@ -20,14 +22,16 @@ public class DaoCliente {
 	public boolean insertarCliente(Cliente user) {
 		PreparedStatement ps=null;
 		try {
-			ps=cx.conectar().prepareStatement("INSERT INTO Cliente VALUES(null,?,?,?)");
+			ps=cx.conectar().prepareStatement("INSERT INTO cliente VALUES(null,?,?,?)");
 			ps.setString(1, user.getDomicilio());
 			ps.setInt(2, user.getTelefono());
 			ps.setString(3, user.getNombre());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -38,7 +42,7 @@ public class DaoCliente {
 		PreparedStatement ps=null;
 		ResultSet rs =null;
 		try {
-			ps=cx.conectar().prepareStatement("SELECT * FROM Cliente");
+			ps=cx.conectar().prepareStatement("SELECT * FROM cliente");
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				Cliente u=new Cliente();
@@ -49,7 +53,9 @@ public class DaoCliente {
 				lista.add(u);
 			}
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 		}
 		return lista;
@@ -60,7 +66,7 @@ public class DaoCliente {
 	public ArrayList<Cliente> fecthBuscar(String palabra) {
 		ArrayList<Cliente> lista2 = new ArrayList<Cliente>();
 		try {
-			String sql = "SELECT * FROM Cliente WHERE " + "(Domicilio LIKE ?) OR " + "(Telefono LIKE ?) OR " + "(Nombre LIKE ?); ";
+			String sql = "SELECT * FROM cliente WHERE " + "(Domicilio LIKE ?) OR " + "(Telefono LIKE ?) OR " + "(Nombre LIKE ?); ";
 			PreparedStatement ps = cx.conectar().prepareStatement(sql);
 			ps.setString(1, "%" + palabra + "%");
 			ps.setString(2, "%" + palabra + "%");
@@ -78,6 +84,9 @@ public class DaoCliente {
 			ps = null;
 			//cx.desconectar();
 		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
 			ex.printStackTrace();
 			System.out.println("Error en BUSCAR");
 		}
@@ -88,11 +97,14 @@ public class DaoCliente {
 	public boolean eliminarCliente(int idcliente) {
 		PreparedStatement ps=null;
 		try {
-			ps=cx.conectar().prepareStatement("DELETE FROM Cliente WHERE idcliente=?");
+			ps=cx.conectar().prepareStatement("DELETE FROM cliente WHERE idcliente=?");
 			ps.setInt(1, idcliente);
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			
 			e.printStackTrace();
 			return false;
@@ -103,7 +115,7 @@ public class DaoCliente {
 	public boolean editarCliente(Cliente user) {
 		PreparedStatement ps=null;
 		try {
-			ps=cx.conectar().prepareStatement("UPDATE Cliente SET domicilio=?, telefono=?, nombre=? WHERE idcliente=?");
+			ps=cx.conectar().prepareStatement("UPDATE cliente SET domicilio=?, telefono=?, nombre=? WHERE idcliente=?");
 			ps.setString(1, user.getDomicilio());
 			ps.setInt(2, user.getTelefono());
 			ps.setString(3, user.getNombre());
@@ -111,6 +123,9 @@ public class DaoCliente {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			
 			e.printStackTrace();
 			return false;

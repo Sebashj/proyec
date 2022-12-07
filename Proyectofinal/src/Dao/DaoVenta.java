@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Conexion.Conexion;
 import Modelo.Autos;
 import Modelo.Venta;
@@ -22,16 +24,18 @@ public class DaoVenta {
 		PreparedStatement ps=null;
 		try {
 			ps=cx.conectar().prepareStatement("INSERT INTO Venta VALUES(null,?,?,?,?,?,?)");
-			ps.setInt(1, user.getIdcliente());
-			ps.setInt(2, user.getIdempleado());
+			ps.setString(1, user.getIdcliente());
+			ps.setString(2, user.getIdempleado());
 			ps.setString(3, user.getLugar());
-			ps.setInt(4, user.getFecha());
+			ps.setString(4, user.getFecha());
 			ps.setInt(5, user.getMonto());
 			ps.setInt(6, user.getNopedido());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -47,16 +51,18 @@ public class DaoVenta {
 			while(rs.next()) {
 				Venta u=new Venta();
 				u.setIdventa(rs.getInt("Idventa"));
-				u.setIdcliente(rs.getInt("Idcliente"));
-				u.setIdempleado(rs.getInt("Idempleado"));
+				u.setIdcliente(rs.getString("Idcliente"));
+				u.setIdempleado(rs.getString("Idempleado"));
 				u.setLugar(rs.getString("Lugar"));
-				u.setFecha(rs.getInt("Fecha"));
+				u.setFecha(rs.getString("Fecha"));
 				u.setMonto(rs.getInt("Monto"));
 				u.setNopedido(rs.getInt("Nopedido"));
 				lista.add(u);
 			}
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 		}
 		return lista;
@@ -79,10 +85,10 @@ public class DaoVenta {
 			while (rs.next()) {
 				Venta p = new Venta();
 				p.setIdventa(rs.getInt("Idventa"));
-				p.setIdcliente(rs.getInt("Idcliente"));
-				p.setIdempleado(rs.getInt("Idempleado"));
+				p.setIdcliente(rs.getString("Idcliente"));
+				p.setIdempleado(rs.getString("Idempleado"));
 				p.setLugar(rs.getString("Lugar"));
-				p.setFecha(rs.getInt("Fecha"));
+				p.setFecha(rs.getString("Fecha"));
 				p.setMonto(rs.getInt("Monto"));
 				p.setNopedido(rs.getInt("Nopedido"));
 				lista2.add(p);
@@ -91,6 +97,9 @@ public class DaoVenta {
 			ps = null;
 			//cx.desconectar();
 		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
 			ex.printStackTrace();
 			System.out.println("Error en BUSCAR");
 		}
@@ -106,7 +115,9 @@ public class DaoVenta {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -117,17 +128,19 @@ public class DaoVenta {
 		PreparedStatement ps=null;
 		try {
 			ps=cx.conectar().prepareStatement("UPDATE Venta SET idcliente=?, idempleado=?, lugar=?, fecha=?, monto=?, nopedido=?  WHERE idventa=?");
-			ps.setInt(1, user.getIdcliente());
-			ps.setInt(2, user.getIdempleado());
+			ps.setString(1, user.getIdcliente());
+			ps.setString(2, user.getIdempleado());
 			ps.setString(3, user.getLugar());
-			ps.setInt(4, user.getFecha());
+			ps.setString(4, user.getFecha());
 			ps.setInt(5, user.getMonto());
 			ps.setInt(6, user.getNopedido());
 			ps.setInt(7, user.getIdventa());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}

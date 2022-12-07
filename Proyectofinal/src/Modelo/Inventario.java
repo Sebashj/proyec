@@ -2,14 +2,14 @@ package Modelo;
 
 public class Inventario {
 	
-	int idinventario, idproducto, fecha, cantidad;
-	String tipodemovimiento;
+	int idinventario, idproducto, cantidad;
+	String fecha, tipodemovimiento;
 	
 	public Inventario() {
 		
 	}
 	
-	public Inventario(int idinventario, int idproducto, int fecha, int cantidad, String tipodemovimiento) {
+	public Inventario(int idinventario, int idproducto, int cantidad, String tipodemovimiento, String fecha) {
 		super();
 		this.idinventario = idinventario;
 		this.idproducto = idproducto;
@@ -30,10 +30,10 @@ public class Inventario {
 	public void setIdproducto(int idproducto) {
 		this.idproducto = idproducto;
 	}
-	public int getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(int fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 	public int getCantidad() {

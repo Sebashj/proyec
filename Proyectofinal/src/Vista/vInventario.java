@@ -134,11 +134,11 @@ public class vInventario extends JInternalFrame {
 			Document doc = new Document();
 			PdfWriter.getInstance(doc, archivo);
 			doc.open();
-			java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.png"));
-			Image img = Image.getInstance(getClass().getResource("/Img/logodesot.png"));
-			img.setAlignment(Element.ALIGN_CENTER);
-            img.scaleToFit(200, 200);
-			doc.add(img);
+			java.awt.Image Img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.jpg"));
+			Image Img = Image.getInstance(getClass().getResource("/Img/logodesot.jpg"));
+			Img.setAlignment(Element.ALIGN_CENTER);
+            Img.scaleToFit(200, 200);
+			doc.add(Img);
 			Paragraph p = new Paragraph(10);
 			com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
 			p.add(Chunk.NEWLINE);
@@ -269,7 +269,7 @@ public class vInventario extends JInternalFrame {
 					}
 					Inventario user=new Inventario();
 					user.setIdproducto(Integer.parseInt(cboproducto.getSelectedItem().toString()));
-					user.setFecha(Integer.parseInt(txtFecha.getText()));
+					user.setFecha(txtFecha.getText());
 					user.setCantidad(Integer.parseInt(txtcantidad.getText()));
 					user.setTipodemovimiento(cboTipodemovimiento.getSelectedItem().toString());
 					if (dao.insertarInventario(user)) {
@@ -287,7 +287,7 @@ public class vInventario extends JInternalFrame {
 			}
 		});
 		btnAgregar.setBounds(584, 26, 151, 57);
-		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/agreagr.jpg")), 50, 20 ));
+		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/agreagr.jpg")), 50, 20 ));
 		contentPane.add(btnAgregar);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -312,7 +312,7 @@ public class vInventario extends JInternalFrame {
 			}
 		});
 		btnEliminar.setBounds(584, 100, 151, 57);
-		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/eliminar.png")), 50, 20 ));
+		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/eliminar.png")), 50, 20 ));
 		contentPane.add(btnEliminar);
 		
 		btnEditar = new JButton("editar");
@@ -324,7 +324,7 @@ public class vInventario extends JInternalFrame {
 						return;
 					}
 					Inventario.setIdproducto(Integer.parseInt(cboproducto.getSelectedItem().toString()));
-					Inventario.setFecha(Integer.parseInt(txtFecha.getText()));
+					Inventario.setFecha(txtFecha.getText());
 					Inventario.setCantidad(Integer.parseInt(txtcantidad.getText()));
 					Inventario.setTipodemovimiento(cboTipodemovimiento.getSelectedItem().toString());
 					if (dao.editarInventario(Inventario)) {
@@ -341,7 +341,7 @@ public class vInventario extends JInternalFrame {
 			}
 		});
 		btnEditar.setBounds(757, 26, 123, 57);
-		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/editar.png")), 50, 20 ));
+		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/editar.png")), 50, 20 ));
 		contentPane.add(btnEditar);
 		
 		scrollPane = new JScrollPane();
@@ -409,13 +409,13 @@ public class vInventario extends JInternalFrame {
 			}
 		});
 		btnPdf.setBounds(757, 100, 123, 57);
-		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 50, 20 ));
+		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pdf.png")), 50, 20 ));
 		contentPane.add(btnPdf);
 		
 		lblNewLabel_2 = new JLabel("Buscar:");
 		lblNewLabel_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
 		lblNewLabel_2.setBounds(322, 114, 188, 43);
-		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/lupa.png")), 50, 20 ));
+		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/lupa.png")), 50, 20 ));
 		contentPane.add(lblNewLabel_2);
 		
 		txtBuscar = new JTextField();

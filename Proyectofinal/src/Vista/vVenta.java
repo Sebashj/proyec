@@ -121,13 +121,13 @@ public class vVenta extends JInternalFrame {
 		cboempleado.setModel(model);
 	}
 	
-	public int Empleado(int id) {
+	public String Empleado(int id) {
 		for (Empleado Empleado : listaEmpleado) {
-			if(Venta.getIdempleado()==id) {
-				return Venta.getIdempleado();
+			if(Empleado.getIdempleado()==id) {
+				return Empleado.getNombre();
 			}
 		}
-		return (Integer) null;
+		return null;
 	}
 	public void cargarComboCliente() {
 		DaoCliente daoPro=new DaoCliente();		
@@ -139,13 +139,13 @@ public class vVenta extends JInternalFrame {
 		cbocliente.setModel(model);
 	}
 	
-	public int Cliente(int id) {
+	public String Cliente(int id) {
 		for (Cliente Cliente : listaCliente) {
-			if(Venta.getIdcliente()==id) {
-				return Venta.getIdcliente();
+			if(Cliente.getIdcliente()==id) {
+				return Cliente.getNombre();
 			}
 		}
-		return (Integer) null;
+		return  null;
 	}
 	public void pdf() {
 		try {
@@ -157,12 +157,12 @@ public class vVenta extends JInternalFrame {
 			Document doc = new Document();
 			PdfWriter.getInstance(doc, archivo);
 			doc.open();
-			java.awt.Image img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.png"));
-			Image img = Image.getInstance(getClass().getResource("/Img/logodesot.png"));
+			java.awt.Image Img2 = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Img/logodesot.jpg"));
+			Image Img = Image.getInstance(getClass().getResource("/Img/logodesot.jpg"));
 			//°
-			img.setAlignment(Element.ALIGN_CENTER);
-			img.scaleToFit(200, 200);
-			doc.add(img);
+			Img.setAlignment(Element.ALIGN_CENTER);
+			Img.scaleToFit(200, 200);
+			doc.add(Img);
 			Paragraph p = new Paragraph(10);
 			com.itextpdf.text.Font negrita = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
 			p.add(Chunk.NEWLINE);
@@ -300,10 +300,10 @@ public class vVenta extends JInternalFrame {
 						return;
 					}
 					Venta user=new Venta();
-					user.setIdcliente(Integer.parseInt(cbocliente.getSelectedItem().toString()));
-					user.setIdempleado(Integer.parseInt(cboempleado.getSelectedItem().toString()));
+					user.setIdcliente(cbocliente.getSelectedItem().toString());
+					user.setIdempleado(cboempleado.getSelectedItem().toString());
 					user.setLugar(txtlugar.getText());
-					user.setFecha(Integer.parseInt(txtfecha.getText()));
+					user.setFecha(txtfecha.getText());
 					user.setMonto(Integer.parseInt(txtmonto.getText()));
 					user.setNopedido(Integer.parseInt(txtnopedido.getText()));
 					if (dao.insertarVenta(user)) {
@@ -321,7 +321,7 @@ public class vVenta extends JInternalFrame {
 			}
 		});
 		btnAgregar.setBounds(520, 26, 146, 55);
-		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/agreagr.jpg")), 50, 20 ));
+		btnAgregar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/agreagr.jpg")), 50, 20 ));
 		contentPane.add(btnAgregar);
 		
 		btnEliminar = new JButton("Eliminar");
@@ -346,7 +346,7 @@ public class vVenta extends JInternalFrame {
 			}
 		});
 		btnEliminar.setBounds(695, 26, 146, 55);
-		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/eliminar.png")), 50, 20 ));
+		btnEliminar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/eliminar.png")), 50, 20 ));
 		contentPane.add(btnEliminar);
 		
 		btnEditar = new JButton("editar");
@@ -357,10 +357,10 @@ public class vVenta extends JInternalFrame {
 						JOptionPane.showMessageDialog(null, "campos vacios");
 						return;
 					}
-					Venta.setIdcliente(Integer.parseInt(cbocliente.getSelectedItem().toString()));
-					Venta.setIdempleado(Integer.parseInt(cboempleado.getSelectedItem().toString()));
+					Venta.setIdcliente(cbocliente.getSelectedItem().toString());
+					Venta.setIdempleado(cboempleado.getSelectedItem().toString());
 					Venta.setLugar(txtlugar.getText());
-					Venta.setFecha(Integer.parseInt(txtfecha.getText()));
+					Venta.setFecha(txtfecha.getText());
 					Venta.setMonto(Integer.parseInt(txtmonto.getText()));
 					Venta.setNopedido(Integer.parseInt(txtnopedido.getText()));
 					if (dao.editarVenta(Venta)) {
@@ -377,7 +377,7 @@ public class vVenta extends JInternalFrame {
 			}
 		});
 		btnEditar.setBounds(520, 92, 146, 55);
-		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/editar.png")), 50, 20 ));
+		btnEditar.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/editar.png")), 50, 20 ));
 		contentPane.add(btnEditar);
 		
 		scrollPane = new JScrollPane();
@@ -474,13 +474,13 @@ public class vVenta extends JInternalFrame {
 			}
 		});
 		btnPdf.setBounds(695, 92, 146, 52);
-		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 50, 20 ));
+		btnPdf.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pdf.png")), 50, 20 ));
 		contentPane.add(btnPdf);
 		
 		lblNewLabel_2 = new JLabel("Buscar");
 		lblNewLabel_2.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 15));
 		lblNewLabel_2.setBounds(303, 172, 119, 33);
-		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/lupa.png")), 50, 20 ));
+		lblNewLabel_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/lupa.png")), 50, 20 ));
 		contentPane.add(lblNewLabel_2);
 		
 		txtBuscar = new JTextField();

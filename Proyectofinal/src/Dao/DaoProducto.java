@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Conexion.Conexion;
 import Modelo.Autos;
 import Modelo.Producto;
@@ -30,7 +32,9 @@ public class DaoProducto {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -54,7 +58,9 @@ public class DaoProducto {
 				lista.add(u);
 			}
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 		}
 		return lista;
@@ -87,6 +93,9 @@ public class DaoProducto {
 			ps = null;
 			//cx.desconectar();
 		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
 			ex.printStackTrace();
 			System.out.println("Error en BUSCAR");
 		}
@@ -102,7 +111,9 @@ public class DaoProducto {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -122,7 +133,9 @@ public class DaoProducto {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}

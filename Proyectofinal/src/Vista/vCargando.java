@@ -35,19 +35,32 @@ public class vCargando extends JFrame {
 
 			@Override
 			public void run() {
-				for (int i = 0; i <= 100; i++) {
-					barcargando.setValue(i);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
+				try {
+					for (int i = 0; i <= 100; i++) {
+						barcargando.setValue(i);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
 						e.printStackTrace();
+						}
+						if (i == 100) {
+							setVisible(false);
+							vPrincial p=new vPrincial();
+							p.setVisible(true);
+						}
 					}
-					if (i == 100) {
-						setVisible(false);
-						vPrincial p=new vPrincial();
-						p.setVisible(true);
-					}
+					
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+
+		        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+		        	JOptionPane.showMessageDialog(null, e.toString());
+		        	JOptionPane.showMessageDialog(null, e.getStackTrace());
+		        	
+					
+					
 				}
+				
 			}
 		});
 		hilo.start();

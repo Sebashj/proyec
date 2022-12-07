@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Conexion.Conexion;
 import Modelo.Autos;
 import Modelo.DetalleV;
@@ -21,7 +23,7 @@ public class DaoDetalleV {
 	public boolean insertarDetalleV(DetalleV user) {
 		PreparedStatement ps=null;
 		try {
-			ps=cx.conectar().prepareStatement("INSERT INTO DetalleV VALUES(null,?,?,?,?,?)");
+			ps=cx.conectar().prepareStatement("INSERT INTO detalleV VALUES(null,?,?,?,?,?)");
 			ps.setInt(1, user.getIdproducto());
 			ps.setInt(2, user.getIdventa());
 			ps.setInt(3, user.getCosto());
@@ -30,7 +32,9 @@ public class DaoDetalleV {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -41,7 +45,7 @@ public class DaoDetalleV {
 		PreparedStatement ps=null;
 		ResultSet rs =null;
 		try {
-			ps=cx.conectar().prepareStatement("SELECT * FROM DetalleV");
+			ps=cx.conectar().prepareStatement("SELECT * FROM detalleV");
 			rs=ps.executeQuery();
 			while(rs.next()) {
 				DetalleV u=new DetalleV();
@@ -54,7 +58,9 @@ public class DaoDetalleV {
 				lista.add(u);
 			}
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 		}
 		return lista;
@@ -64,7 +70,7 @@ public class DaoDetalleV {
 	public ArrayList<DetalleV> fecthBuscar(String palabra) {
 		ArrayList<DetalleV> lista2 = new ArrayList<DetalleV>();
 		try {
-			String sql = "SELECT * FROM DetalleV WHERE " + "(Idproducto LIKE ?) OR " + "(Idventa LIKE ?) OR " +"(Costo LIKE ?) OR " +"(Cantidad LIKE ?) OR " + "(Importe LIKE ?); ";
+			String sql = "SELECT * FROM detalleV WHERE " + "(Idproducto LIKE ?) OR " + "(Idventa LIKE ?) OR " +"(Costo LIKE ?) OR " +"(Cantidad LIKE ?) OR " + "(Importe LIKE ?); ";
 			PreparedStatement ps = cx.conectar().prepareStatement(sql);
 			ps.setString(1, "%" + palabra + "%");
 			ps.setString(2, "%" + palabra + "%");
@@ -87,6 +93,9 @@ public class DaoDetalleV {
 			ps = null;
 			//cx.desconectar();
 		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
 			ex.printStackTrace();
 			System.out.println("Error en BUSCAR");
 		}
@@ -97,12 +106,14 @@ public class DaoDetalleV {
 	public boolean eliminarDetalleV(int idDetalleV) {
 		PreparedStatement ps=null;
 		try {
-			ps=cx.conectar().prepareStatement("DELETE FROM DetalleV WHERE iddetalle=?");
+			ps=cx.conectar().prepareStatement("DELETE FROM detalleV WHERE iddetalle=?");
 			ps.setInt(1, idDetalleV);
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -112,7 +123,7 @@ public class DaoDetalleV {
 	public boolean editarDetalleV(DetalleV user) {
 		PreparedStatement ps=null;
 		try {
-			ps=cx.conectar().prepareStatement("UPDATE DetalleV SET idproducto=?, idventa=?, costo=?, cantidad=?, importe=? WHERE iddetalle=?");
+			ps=cx.conectar().prepareStatement("UPDATE detalleV SET idproducto=?, idventa=?, costo=?, cantidad=?, importe=? WHERE iddetalle=?");
 			ps.setInt(1, user.getIdproducto());
 			ps.setInt(2, user.getIdventa());
 			ps.setInt(3, user.getCosto());
@@ -122,6 +133,9 @@ public class DaoDetalleV {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			
 			e.printStackTrace();
 			return false;

@@ -2,21 +2,21 @@ package Modelo;
 
 public class Venta {
 	
-	int idventa, idcliente, idempleado, fecha, monto, nopedido;
-	String lugar;
+	int idventa, monto, nopedido;
+	String lugar, idcliente, idempleado, fecha ;
 	public Venta() {
 		
 	}
 	
-	public Venta(int idventa, int idcliente, int idempleado, int fecha, int monto, int nopedido, String lugar) {
+	public Venta(int idventa, int monto, int nopedido, String lugar, String idcliente, String idempleado, String fecha) {
 		super();
 		this.idventa = idventa;
-		this.idcliente = idcliente;
-		this.idempleado = idempleado;
-		this.fecha = fecha;
 		this.monto = monto;
 		this.nopedido = nopedido;
 		this.lugar = lugar;
+		this.idcliente = idcliente;
+		this.idempleado = idempleado;
+		this.fecha = fecha;
 	}
 	
 	public int getIdventa() {
@@ -25,22 +25,22 @@ public class Venta {
 	public void setIdventa(int idventa) {
 		this.idventa = idventa;
 	}
-	public int getIdcliente() {
+	public String getIdcliente() {
 		return idcliente;
 	}
-	public void setIdcliente(int idcliente) {
+	public void setIdcliente(String idcliente) {
 		this.idcliente = idcliente;
 	}
-	public int getIdempleado() {
+	public String getIdempleado() {
 		return idempleado;
 	}
-	public void setIdempleado(int idempleado) {
+	public void setIdempleado(String idempleado) {
 		this.idempleado = idempleado;
 	}
-	public int getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(int fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 	public int getMonto() {

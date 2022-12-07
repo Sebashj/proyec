@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="src/Conexion/itextpdf-5.5.9.jar"/>
 	<classpathentry kind="lib" path="src/Conexion/AbsoluteLayout.jar"/>
 	<classpathentry kind="lib" path="src/Conexion/sun.misc.BASE64Decoder.jar"/>
+	<classpathentry kind="lib" path="src/Conexion/mysql-connector-j-8.0.31.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -129,7 +129,7 @@ public class Incar extends JInternalFrame {
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(439, 27, 335, 229);
-		lblNewLabel_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/logodesot.png")), 335, 229 ));
+		lblNewLabel_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/logodesot.png")), 335, 229 ));
 		contentPane.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("<html> Incar es un sotware creado y diceñado por la compañia QUETWARE, este sotware fue creado para llevar el gestionamiento de una agencia de autos  ");

@@ -128,7 +128,7 @@ public class QUETWARE extends JInternalFrame {
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(439, 27, 335, 229);
-		lblNewLabel_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/logog.jpg")), 335, 229 ));
+		lblNewLabel_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/logog.jpg")), 335, 229 ));
 		contentPane.add(lblNewLabel_1);
 		
 		lblNewLabel_2 = new JLabel("<html> QUETWARE es una empresa que tiene como vision  crear sotwares para la gestion y el manejo de datos de un corporativo y/o microempresa<html>");

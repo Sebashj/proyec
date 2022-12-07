@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Conexion.Conexion;
 import Modelo.Autos;
 import Modelo.Inventario;
@@ -23,13 +25,15 @@ public class DaoInventario {
 		try {
 			ps=cx.conectar().prepareStatement("INSERT INTO Inventario VALUES(null,?,?,?,?)");
 			ps.setInt(1, user.getIdproducto());
-			ps.setInt(2, user.getFecha());
+			ps.setString(2, user.getFecha());
 			ps.setInt(3, user.getCantidad());
 			ps.setString(4, user.getTipodemovimiento());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -46,13 +50,15 @@ public class DaoInventario {
 				Inventario u=new Inventario();
 				u.setIdinventario(rs.getInt("IdInventario"));
 				u.setIdproducto(rs.getInt("Idproducto"));
-				u.setFecha(rs.getInt("Fecha"));
+				u.setFecha(rs.getString("Fecha"));
 				u.setCantidad(rs.getInt("Cantidad"));
 				u.setTipodemovimiento(rs.getString("Tipodemovimiento"));
 				lista.add(u);
 			}
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 		}
 		return lista;
@@ -74,7 +80,7 @@ public class DaoInventario {
 				Inventario p = new Inventario();
 				p.setIdinventario(rs.getInt("IdInventario"));
 				p.setIdproducto(rs.getInt("Idproducto"));
-				p.setFecha(rs.getInt("Fecha"));
+				p.setFecha(rs.getString("Fecha"));
 				p.setCantidad(rs.getInt("Cantidad"));
 				p.setTipodemovimiento(rs.getString("Tipodemovimiento"));
 				lista2.add(p);
@@ -83,6 +89,9 @@ public class DaoInventario {
 			ps = null;
 			//cx.desconectar();
 		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
 			ex.printStackTrace();
 			System.out.println("Error en BUSCAR");
 		}
@@ -98,7 +107,9 @@ public class DaoInventario {
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -110,14 +121,16 @@ public class DaoInventario {
 		try {
 			ps=cx.conectar().prepareStatement("UPDATE Inventario SET Idproducto=?, Fecha=?, Cantidad=?, Tipodemovimiento=? WHERE idinventario=?");
 			ps.setInt(1, user.getIdproducto());
-			ps.setInt(2, user.getFecha());
+			ps.setString(2, user.getFecha());
 			ps.setInt(3, user.getCantidad());
 			ps.setString(4, user.getTipodemovimiento());
 			ps.setInt(5, user.getIdinventario());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, e.toString());
 			e.printStackTrace();
 			return false;
 		}

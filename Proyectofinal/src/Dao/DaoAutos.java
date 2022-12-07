@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 import Conexion.Conexion;
 import Modelo.Autos;
 import Modelo.Cliente;
@@ -21,7 +23,7 @@ public class DaoAutos {
 
     public boolean create(Autos a) {
         try {
-            String sql = "INSERT INTO Autos (idauto,marca,año,tipodeauto,cilindros,imagen) VALUES(null,?,?,?,?,?)";
+            String sql = "INSERT INTO autos (idauto,marca,año,tipodeauto,cilindros,imagen) VALUES(null,?,?,?,?,?)";
             PreparedStatement ps = cx.conectar().prepareStatement(sql);
             ps.setString(1, a.getMarca());
             ps.setInt(2, a.getAño());
@@ -34,7 +36,10 @@ public class DaoAutos {
             cx.conectar();
             return true;
         } catch (SQLException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage());
             Logger.getLogger(DaoAutos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
             ex.printStackTrace();
             return false;
         }
@@ -48,7 +53,7 @@ public class DaoAutos {
         try {
         	//ps=cx.conectar().prepareStatement("SELECT * FROM Autos");
 			//rs=ps.executeQuery();
-            String sql = "SELECT * FROM Autos";
+            String sql = "SELECT * FROM autos";
             PreparedStatement ps = cx.conectar().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -65,6 +70,9 @@ public class DaoAutos {
             ps = null;
             cx.conectar();
         } catch (SQLException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
             System.out.println("Fallo metodo read categoria");
             ex.printStackTrace();
         }
@@ -74,7 +82,7 @@ public class DaoAutos {
 	public ArrayList<Autos> fecthBuscar(String palabra) {
 		ArrayList<Autos> lista2 = new ArrayList<Autos>();
 		try {
-			String sql = "SELECT * FROM Autos WHERE " + "(Marca LIKE ?) OR " + "(Año LIKE ?) OR " +"(Tipodeauto LIKE ?) OR " +"(Cilindros LIKE ?) OR " + "(Imagen LIKE ?); ";
+			String sql = "SELECT * FROM autos WHERE " + "(Marca LIKE ?) OR " + "(Año LIKE ?) OR " +"(Tipodeauto LIKE ?) OR " +"(Cilindros LIKE ?) OR " + "(Imagen LIKE ?); ";
 			PreparedStatement ps = cx.conectar().prepareStatement(sql);
 			ps.setString(1, "%" + palabra + "%");
 			ps.setString(2, "%" + palabra + "%");
@@ -98,6 +106,9 @@ public class DaoAutos {
 			//cx.desconectar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
 			System.out.println("Error en BUSCAR");
 		}
 		return lista2;
@@ -107,7 +118,7 @@ public class DaoAutos {
     public Autos read(int idauto) {
         Autos a = new Autos();
         try {
-            String sql = "SELECT * FROM Autos WHERE idauto=?";
+            String sql = "SELECT * FROM autos WHERE idauto=?";
             PreparedStatement ps = cx.conectar().prepareStatement(sql);
             ps.setInt(1, idauto);
             ResultSet rs = ps.executeQuery();
@@ -123,6 +134,9 @@ public class DaoAutos {
             ps = null;
             cx.conectar();
         } catch (SQLException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
             System.out.println("Fallo metodo read categoria");
             ex.printStackTrace();
         }
@@ -131,7 +145,7 @@ public class DaoAutos {
 
     public boolean update(Autos a) {
         try {
-            String sql = "UPDATE Autos SET marca=?, año=?, tipodeauto=?, cilindros=?, imagen=?  WHERE idauto=?";
+            String sql = "UPDATE autos SET marca=?, año=?, tipodeauto=?, cilindros=?, imagen=?  WHERE idauto=?";
             PreparedStatement ps = cx.conectar().prepareStatement(sql);
             ps.setString(1, a.getMarca());
             ps.setInt(2, a.getAño());
@@ -139,12 +153,16 @@ public class DaoAutos {
             ps.setString(4, a.getCilindros());
             ps.setString(5, a.getImagen());
             ps.setInt(6, a.getIdauto());
+            System.out.println(ps.toString());
             ps.execute();
             ps.close();
             ps = null;
             cx.conectar();
             return true;
         } catch (SQLException ex) {
+        	JOptionPane.showMessageDialog(null, ex.toString());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
         	 ex.printStackTrace();
             return false;
         }
@@ -152,7 +170,7 @@ public class DaoAutos {
 
     public boolean delete(int idauto) {
         try {
-            String sql = "DELETE FROM Autos WHERE idauto=?";
+            String sql = "DELETE FROM autos WHERE idauto=?";
             PreparedStatement ps = cx.conectar().prepareStatement(sql);
             ps.setInt(1, idauto);
             ps.execute();
@@ -161,6 +179,9 @@ public class DaoAutos {
             cx.conectar();
             return true;
         } catch (SQLException ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage());
+        	JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
+        	JOptionPane.showMessageDialog(null, ex.toString());
         	 ex.printStackTrace();
             return false;
         }

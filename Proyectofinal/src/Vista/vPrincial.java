@@ -63,6 +63,7 @@ public class vPrincial extends JFrame {
 	vAuto vAuto=new vAuto();
 	QUETWARE QUETWARE=new QUETWARE();
 	Incar Incar=new Incar();
+        pruebaaa pruebaaa=new pruebaaa();
 	Desarrolladores Desarrolladores=new Desarrolladores();
 	Funciones fx = new Funciones();
 	
@@ -92,7 +93,7 @@ public class vPrincial extends JFrame {
 		
 		JMenu mnNewMenu = new JMenu("sistema");
 		menuBar.add(mnNewMenu);
-		mnNewMenu.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/sistema.png")), 20, 20 ));
+		mnNewMenu.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/sistema.png")), 20, 20 ));
 		
 		JButton btnNewButton = new JButton("salir ");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -105,7 +106,7 @@ public class vPrincial extends JFrame {
 		
 		JMenu mnNewMenu_1 = new JMenu("Empleado");
 		menuBar.add(mnNewMenu_1);
-		mnNewMenu_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/emple.png")), 20, 20 ));
+		mnNewMenu_1.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/emple.png")), 20, 20 ));
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Empleados");
 		mnNewMenu_1.add(mntmNewMenuItem);
@@ -154,7 +155,7 @@ public class vPrincial extends JFrame {
 		
 		JMenu mnNewMenu_4 = new JMenu("Cliente");
 		menuBar.add(mnNewMenu_4);
-		mnNewMenu_4.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/cli.png")), 20, 20 ));
+		mnNewMenu_4.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/cli.png")), 20, 20 ));
 		
 		JMenuItem mntmNewMenuItem_6_1 = new JMenuItem("Cliente");
 		mntmNewMenuItem_6_1.setIcon(new ImageIcon(vPrincial.class.getResource("/Img/Cliente.png")));
@@ -191,7 +192,7 @@ public class vPrincial extends JFrame {
 		
 		JMenu mnNewMenu_2 = new JMenu("PDF");
 		menuBar.add(mnNewMenu_2);
-		mnNewMenu_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pdf.png")), 20, 20 ));
+		mnNewMenu_2.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pdf.png")), 20, 20 ));
 		
 		JMenuItem mntmNewMenuItem_12 = new JMenuItem("Auto.pdf");
 		mntmNewMenuItem_12.addActionListener(new ActionListener() {
@@ -259,7 +260,7 @@ public class vPrincial extends JFrame {
 		
 		JMenu mnNewMenu_3 = new JMenu("Acerca de");
 		menuBar.add(mnNewMenu_3);
-		mnNewMenu_3.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pre.jpg")), 20, 20 ));
+		mnNewMenu_3.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pre.jpg")), 20, 20 ));
 		
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("QUETWARE");
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
@@ -267,7 +268,7 @@ public class vPrincial extends JFrame {
 				QUETWARE.setVisible(true);
 			}
 		});
-		mntmNewMenuItem_8.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/empresalogo.png")), 20, 20 ));
+		mntmNewMenuItem_8.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/empresalogo.png")), 20, 20 ));
 		mntmNewMenuItem_8.setFont(new Font("Rockwell Extra Bold", Font.BOLD, 15));
 		mnNewMenu_3.add(mntmNewMenuItem_8);
 		
@@ -277,7 +278,7 @@ public class vPrincial extends JFrame {
 				Incar.setVisible(true);
 			}
 		});
-		mntmNewMenuItem_9.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/logodesot.png")), 20, 20 ));
+		mntmNewMenuItem_9.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/logodesot.png")), 20, 20 ));
 		mntmNewMenuItem_9.setFont(new Font("Baskerville Old Face", Font.BOLD, 20));
 		mnNewMenu_3.add(mntmNewMenuItem_9);
 		
@@ -287,9 +288,27 @@ public class vPrincial extends JFrame {
 				Desarrolladores.setVisible(true);
 			}
 		});
-		mntmNewMenuItem_10.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/pregunta.png")), 20, 20 ));
+		mntmNewMenuItem_10.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pregunta.png")), 20, 20 ));
 		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mnNewMenu_3.add(mntmNewMenuItem_10);
+		
+		JMenuItem mntmNewMenuItem_19 = new JMenuItem("Manual Usuario");
+		mntmNewMenuItem_19.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pdf.png")), 20, 20 ));
+		mntmNewMenuItem_19.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		mnNewMenu_3.add(mntmNewMenuItem_19);
+		
+		JMenuItem mntmNewMenuItem_20 = new JMenuItem("Manual tecnico");
+		mntmNewMenuItem_20.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/pdf.png")), 20, 20 ));
+		mntmNewMenuItem_20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		mnNewMenu_3.add(mntmNewMenuItem_20);
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vInventario.setVisible(true);
@@ -298,6 +317,7 @@ public class vPrincial extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vEmpleado.setVisible(true);
+               //pruebaaa.setVisible(true);
 			}
 		});
 		contentPane = new JPanel();
@@ -325,6 +345,7 @@ public class vPrincial extends JFrame {
 		QUETWARE.setLocation(0, 0);
 		Incar.setLocation(0, 0);
 		Desarrolladores.setLocation(0, 0);
+        pruebaaa.setLocation(0, 0);
 
 		vAuto.setBounds(0, 0, 921, 533);
 		vCliente.setBounds(0, 0, 921, 533);
@@ -337,6 +358,7 @@ public class vPrincial extends JFrame {
 		QUETWARE.setBounds(0, 0, 921, 533);
 		Incar.setBounds(0, 0, 921, 533);
 		Desarrolladores.setBounds(0, 0, 921, 533);
+        pruebaaa.setBounds(0, 0, 921, 533);
 
 		desktopPane.add(vAuto);
 		desktopPane.add(vCliente);
@@ -349,10 +371,11 @@ public class vPrincial extends JFrame {
 		desktopPane.add(QUETWARE);
 		desktopPane.add(Incar);
 		desktopPane.add(Desarrolladores);
+        desktopPane.add( pruebaaa);        
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(21, 11, 147, 106);
-		lblNewLabel.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/img/logodesot.png")), 147, 106 ));
+		lblNewLabel.setIcon(fx.cambiar(new ImageIcon(getClass().getResource("/Img/logodesot.png")), 147, 106 ));
 		contentPane.add(lblNewLabel);
 		
 		
